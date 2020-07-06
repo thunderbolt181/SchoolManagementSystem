@@ -1,0 +1,37 @@
+{% extends 'students/base.html' %}
+{% block content %}
+<div class="w-100 ">
+    <div class="posts mb-2 w-100">
+        {% if results %}
+            <div class="table-responsive">
+                <table class="table">
+                    <tr>
+                        <td><strong>Admission No.</strong></td>
+                        <td><strong>Name</strong></td>
+                        <td><strong>Phone no</strong></td>
+                        <td><strong>Email</strong></td>
+                    </tr>
+                    {% for result in results %}
+                        <tr >
+                            <td>{{ result.Admission_no }}</td>
+                            <td>{{ result.Name }}</td>
+                            <td>{{ result.Phone }}</td>
+                            <td>{{ result.Email }}</td>
+                            <td><a href="{% url 'student-ID' result.id %}"><Button class="btn btn-info">View</Button></a></td>
+                        </tr>
+                    {% endfor %}
+                </table>
+            </div>
+        {% endif %}
+        {% if no_result %}
+            <div class="alert alert-info h2">No Search Results Found!</div>
+        {% endif %}
+        <div class="w-100">
+            <a href="{% url 'home' %}">
+                <button class="btn btn-info">Back</button>
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

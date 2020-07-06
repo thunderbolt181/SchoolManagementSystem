@@ -1,0 +1,14 @@
+{% extends "students/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class='p-0 pt-5 d-flex m-auto justify-content-center'>
+    <form class="form-group" method="POST">
+        <div class="border-top pt-3">
+            You Have Been Loged Out
+            <small class="text-muted">
+                <a class='ml-2' href="{% url 'login' %}">Log In Again</a>
+            </small>
+        </div>
+    </form>
+</div>
+{% endblock content%}

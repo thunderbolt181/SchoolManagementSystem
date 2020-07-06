@@ -1,0 +1,30 @@
+{% extends "students/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="w-100 m-3">
+    <div class="posts mb-2 w-100">
+        <div class="md-6">
+            <div class="col no-gutters border rounded overflow-hidden p-0 flex-md-row mb-2 shadow-sm h-md-250 position-relative">
+                <div class="w-100 d-flex flex-column position-static">
+                    <form class="form-group" method="POST" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <div class="media-body m-3">
+                        {{s_form|crispy}}
+                        </div>
+                        <div class="w-100 d-flex container-login100-form-btn justify-content-around">
+                            <button class="btn btn-info w-50 m-3">
+                                Create
+                            </button>
+                            <a href="{% url 'home' %}" class=" w-50 m-3">
+                                <button type="button" class=" w-100 btn btn-danger w-50">
+                                    Cancel
+                                </button>
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content%}

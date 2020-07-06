@@ -1,0 +1,204 @@
+{% extends "students/base.html" %}
+
+{% block content %}
+    <div class="container m-2 rounded pl-1 pr-1 border border-secondary">
+        <div class="p-1 w-100 m-2 mb-5 d-flex justify-content-center">
+            <h1>Student Information</h1>
+        </div>
+        <div class="w-100 d-flex">
+            <div class="p-1 w-100 m-2 flex-row justify-content-between">
+                <h1 class="text-primary ml-5">{{student.Name}}</h1>
+                <h5 class="mt-3 mr-5  ml-5">Admission_no:<span class="text-primary ">{{student.Admission_no}}</span></h1>
+            </div>
+            <a href="{% url 'home' %}" class="w-25 mt-4 mr-3">
+                <button class="btn btn-info w-100">Back</button>
+            </a>
+        </div>
+        <div class="p-1 w-100 m-2">
+            <div class="table-responsive">
+                <table class="w-100 table">
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            DOB
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.DOB}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Gender
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Gender}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Class(currently studying in)
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Class}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Email
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Email}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Phone 1
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Phone}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Phone 2
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Phone_Other}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Fathers Name
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Fathers_Name}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Fathers Occupation
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Fathers_Occupation}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Mothers Name 
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Mothers_Name}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Mothers Occupation 
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Mothers_Occupation}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Religion
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Relegion}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Caste
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.caste}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Category
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Category}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Nationality
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Nationality}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Note about Student
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.Note_about_Student}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Admission Date
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.created_on}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                            Entry Filled By
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.created_by}}
+                        </td>
+                    </tr>
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                           Remaning Fees(Current Year)
+                        </td>
+                        <td class="w-100 text-center">
+                            {{student.remaning_fees}}
+                        </td>
+                    </tr>
+                    {% if user.profile.accoutant %}
+                        <tr class="w-100 d-flex justify-content-around">
+                            <td class="w-100 text-center font-weight-bold">
+                            Submit Fees
+                            </td>
+                            <td class="w-100 text-center">
+                                <a href="{% url 'submit_student_fees' student.id %}" class="w-25 mt-4 mr-3">
+                                    <button class="btn btn-info w-100">Submit</button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if user.profile.Edit_Student_Detail %}
+                        <tr class="w-100 d-flex justify-content-around">
+                            <td class="w-100 text-center font-weight-bold">
+                            Edit Details
+                            </td>
+                            <td class="w-100 text-center">
+                                <a href="{% url 'Edit_Student_Detail' student.id %}" class="w-25 mt-4 mr-3">
+                                    <button class="btn btn-info w-100">Edit</button>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </table>
+                <div class="m-3">
+                    {% if messages %}
+                        <div class="alert alert-success">
+                            <ul class="messages list-unstyled">
+                                {% for message in messages %}
+                                <li class="{{ message.tags }}">{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <!-- <a href="{% url 'home' %}"><button>Back</button></a>  -->
+    </div>
+{% endblock %}
