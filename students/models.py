@@ -48,7 +48,7 @@ class student(models.Model):
     Nationality = models.CharField(max_length=50,blank=False,default="Indian")
     Note_about_Student = models.CharField(max_length=500,blank=True)
     created_on = models.DateField(auto_now_add=True)
-    created_by = models.ForeignKey(User,on_delete=models.PROTECT)
+    created_by = models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
     remaning_fees = models.IntegerField(blank=False,default=-1)
     paid_fees = models.IntegerField(blank=False,default=0)
 

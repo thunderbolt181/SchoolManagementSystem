@@ -1,5 +1,4 @@
 {% extends "students/base.html" %}
-{% load crispy_forms_tags %}
 {% block content %}
 <div class="w-100 m-3">
     <div class="posts mb-2 w-100">
@@ -20,7 +19,28 @@
                     <form class="form-group" method="POST" enctype="multipart/form-data">
                         {%csrf_token%}
                         <div class="media-body m-3">
-                        {{form|crispy}}
+                            <div class="media-body m-3">
+                                {% for field in form %}
+                                    <table class="table table-borderless ">
+                                        <tr>
+                                            <td>{{ field.label_tag }}</td>
+                                            <td> <div class="bg-secondary text-white p-1 m-0 border border-primary rounded">{{ field }}</td>
+                                        </tr>
+                                        {% if field.help_text %}
+                                            <p class="help">{{ field.help_text|safe }}</p>
+                                        {% endif %}
+                                    </table>
+                                {% endfor %}
+                                {% if form.errors %}
+                                    <div class="alert alert-danger" role="alert">
+                                        <ul class='form-errors'>
+                                            {% for error in form.errors %}
+                                                <li> Check {{ error }}</li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
+                                {% endif %}
+                            </div>
                         </div>
                         <div class="w-100 d-flex container-login100-form-btn justify-content-around">
                             <button class="btn btn-info w-50 m-3">

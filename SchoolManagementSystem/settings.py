@@ -32,7 +32,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'students.apps.StudentsConfig',
-    'crispy_forms',
     'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -120,9 +119,15 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.0/howto/static-files/
 
-STATIC_URL = '/static/'
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
+STATICFILES_DIRS = (
+     os.path.join(BASE_DIR, 'static'),
+)
+STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL='home'
 

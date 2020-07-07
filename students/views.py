@@ -73,7 +73,7 @@ class Edit_Student_Detail(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
     model = student
     fields = ['Admission_no','Name','DOB','Gender','Phone','Phone_Other','Email',
             'Class','Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation',
-            'Relegion','caste','Category','Nationality','Note_about_Student']
+            'Relegion','caste','Category','Address','Nationality','Note_about_Student']
     
     def form_valid(self,form):
         form.instance.created_by=self.request.user
