@@ -6,7 +6,7 @@ class StudentCreateForm(forms.ModelForm):
 
     class Meta:
         model = student
-        fields = ['Admission_no','Name','DOB','Gender','Phone','Phone_Other','Email',
+        fields = ['Admission_no','Name','DOB','Gender','Profile_pic','Phone','Phone_Other','Email',
             'Class','Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation',
             'Relegion','caste','Category','Address','Nationality','Note_about_Student']
 

@@ -3,6 +3,7 @@ from .models import student
 from .forms import StudentCreateForm, submit_fees
 from django.contrib import messages
 from django.db.models import Q
+from django.http import Http404
 from django.views.generic import UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
@@ -52,7 +53,7 @@ def home(request):
 @login_required
 def create_entry(request):
     if request.method == 'POST':
-        s_form = StudentCreateForm(request.POST)
+        s_form = StudentCreateForm(request.POST,request.FILES)
         if s_form.is_valid():
             S = s_form.save(commit=False)
             S.created_by=request.user
@@ -69,17 +70,19 @@ def studentID(request,student_id):
     student_obj = student.objects.get(id=int(student_id))
     return render(request,"students/student_id.html",{'student':student_obj,'user':user})
 
-class Edit_Student_Detail(LoginRequiredMixin,SuccessMessageMixin,UpdateView):
-    model = student
-    fields = ['Admission_no','Name','DOB','Gender','Phone','Phone_Other','Email',
-            'Class','Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation',
-            'Relegion','caste','Category','Address','Nationality','Note_about_Student']
-    
-    def form_valid(self,form):
-        form.instance.created_by=self.request.user
-        messages.success(self.request, 'Updated Successfully')
-        form.save()
-        return self.render_to_response(self.get_context_data(form=form))
+def Edit_Student_Detail(request,student_id):
+    student_obj = student.objects.get(id=int(student_id))
+    if request.method == 'POST':
+        form = StudentCreateForm(request.POST,request.FILES,instance=student_obj)
+        if form.is_valid():
+            S = form.save(commit=False)
+            S.created_by=request.user
+            messages.success(request, 'Student Details Updated successfully!')
+            S.save()
+            return redirect('student-ID',student_obj.id)
+    else:
+        form = StudentCreateForm(instance=student_obj)
+    return render(request, 'students/student_form.html', {'student':student_obj,'form': form,'user':request.user})
 
 @login_required
 def submit_student_fees(request,student_id):
@@ -96,4 +99,14 @@ def submit_student_fees(request,student_id):
                 messages.warning(request, 'Please Enter Correct Information')
     else:
         form = submit_fees()
-    return render(request,'students/submit-fees.html',{"form":form,'user':request.user})
+    context={"form":form,'user':request.user,'student':student_obj}
+    return render(request,'students/submit-fees.html',context)
+
+@login_required
+def StudentDelete(request,student_id):
+    try : 
+        student_object = student.objects.get(Admission_no=student_id)
+        student_object.delete()
+    except:
+        raise Http404("Post Does Not Exist")
+    return redirect('home')

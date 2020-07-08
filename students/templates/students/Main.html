@@ -1,25 +1,24 @@
 {% extends "students/base.html" %}
 
 {% block content %}
-    <div class="container m-2 p-0 bg-dark rounded border border-secondary ">
-        <div class="w-100 p-1">
-            <div class="text-light mt-2 mb-2 w-100 text-center">
-                Student's Database
-            </div>
-            <div class="d-flex justify-content-between">
-                <a href="{% url 'create-entry' %}" class="text-decoration-none">
-                    <button class="btn btn-info">
-                        Create Entry
-                    </button>
-                </a>
-                <form class="form-inline mt-md-0" action="{% url 'search' %}" method="GET">
-                    <input class="form-control mr-sm-2" type="text" value='{{search}}' placeholder="Admission No." name='q'>
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                </form>
-            </div>
+<div class="wrap-login100" style="padding: 10px;">
+    <div class=" w-100 p-1 bg-dark rounded border border-secondary overflow-hidden">
+        <div class="text-light mt-2 mb-2 w-100 text-center">
+            Student's Database
+        </div>
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'create-entry' %}" class="text-decoration-none">
+                <button class="btn btn-info">
+                    Create Entry
+                </button>
+            </a>
+            <form class="d-flex flex-row mt-md-0 p-0 justify-content-between" action="{% url 'search' %}" method="GET">
+                <input class="form-control mr-sm-2 " type="text" value='{{search}}' placeholder="Admission No." name='q'>
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
     </div>
-    <div class="container m-2 rounded pl-1 pr-1 border border-secondary">
+    <div class="w-100 rounded mt-1 pl-1 border border-secondary">
         <div class="table-responsive">
             <table class="table">
                 <tr>
@@ -27,6 +26,7 @@
                     <td><strong>Name</strong></td>
                     <td><strong>Phone no</strong></td>
                     <td><strong>Email</strong></td>
+                    <td></td>
                 </tr>
                 {% for student in students %}
                     <tr >
@@ -61,4 +61,5 @@
                 </ul>
             {% endif %}
     </div>
+</div>
 {% endblock %}

@@ -4,38 +4,56 @@
     <head>
         <!-- Required meta tags -->
         <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+        <meta name="author" content="sachin baghel">
+        <meta name="viewport" content="width=device-width">
+        <meta name="keyword" content="School-Management-system">
+        <meta name="desctiption" content="school database">
         <!-- Bootstrap CSS -->
-        <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous"> -->
-        <link rel="stylesheet" type="text/css" href="{% static 'students/css/util.css'%}" >
-        <link rel="stylesheet" type="text/css" href="{% static 'students/css/main.css'%}" >
-        <link rel="stylesheet" type="text/css" href="{% static 'students/css/bootstrap.min.css'%}" >
+        <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous"> -->
 
-
+        <link rel="icon" type="image/png" href="{% static 'students/images/icons/favicon.ico'%}"/>
+        <link rel="stylesheet" type="text/css" href="{% static 'students/vendor/bootstrap/css/bootstrap.min.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'students/fonts/font-awesome-4.7.0/css/font-awesome.min.css'%}">
+        <!-- <link rel="stylesheet" type="text/css" href="{% static 'students/css/util.css'%}"> -->
+        <link rel="stylesheet" type="text/css" href="{% static 'students/css/main.css'%}">
         <title>Students</title>
+        
     </head>
-    <body class="bg-secondary ">
-        <nav class="navbar navbar-expand-md navbar-dark mc-4 bg-dark border-bottom border-primary">
-            <a class="navbar-brand" href="{% url 'home' %}">School Management System</a>
-            {% if user.is_authenticated %}
-                <div class="" id="">
-                    <ul class="navbar-nav mr-auto">
-                        <li class="nav-item  nav-link text-light">
-                            {{ user.username }}
-                        </li>
-                        <li class="nav-item active">
-                            <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                        </li>
-                    </ul>
+    <body >
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+            <div class="container">
+                <div class='navbar-brand'>
+                    <a class="navbar-brand font-weight-bolder" href="{% url 'home' %}">School Management System</a>
                 </div>
-            {% endif %}
-        </nav>
-        <div class="container mt-2 bg-light border rounded"> {% block content %}{% endblock %}</div>
+                {% if user.is_authenticated %}
+                    <div>
+                        <ul class="navbar-nav ml-auto">
+                            <li class="mt-2 nav-item text-primary">
+                                {{user.username}}
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                            </li>
+                        </ul>
+                    </div>
+                {% endif %}
+            </div>
+        </nav> 
+        <!-- <div class="container mt-2 p-1 bg-light border rounded">  -->
+        <div class="limiter">
+            <div class="container-login100 ">
+                {% block content %}{% endblock %} 
+            </div>
+        </div>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> -->
-        <script src="{% static 'students/js/bootstrap.min.js'%}"></script>
-        <script src="{% static 'students/js/main.js'%}"></script>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+        <script src="{% static 'students/js/bootstrap.min.js'%}"></script> 
+        <!-- <script src="{% static 'students/vendor/bootstrap/js/popper.js'%}"></script> -->
+        <!-- <script src="{% static 'students/vendor/bootstrap/js/bootstrap.min.js'%}"></script> -->
+        <!-- <script src="{% static 'students/vendor/select2/select2.min.js'%}"></script> -->
+        <!-- <script src="{% static 'students/vendor/tilt/tilt.jquery.min.js'%}"></script> -->
+        <!-- <script src="{% static 'students/vendor/jquery/jquery-3.2.1.min.js'%}"></script> -->
+        <!-- <script src="{% static 'students/js/main.js'%}"></script> -->
     </body>
 </html>

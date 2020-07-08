@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 GENDER=(
     ("Male","Male"),
     ("Female","Female")
@@ -51,6 +52,22 @@ class student(models.Model):
     created_by = models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
     remaning_fees = models.IntegerField(blank=False,default=-1)
     paid_fees = models.IntegerField(blank=False,default=0)
+    Profile_pic = models.ImageField(default="",blank=False,upload_to='Student_images')
+
+    def delete(self, *args, **kwargs):
+        self.Profile_pic.delete()
+        super().delete(*args,**kwargs)
+
+    def save(self, *args, **kwargs):
+        super().save()
+        try :
+            img=Image.open(self.image.path)
+            if img.height > 256 or img.width > 256:
+                new_img = (256,256)
+                img.thumbnail(new_img)
+                img.save(self.image.path)
+        except:
+            pass
 
     def __str__(self):
         return self.Name
