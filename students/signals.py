@@ -21,7 +21,7 @@ def auto_delete_file_on_change(sender, instance, **kwargs):
         old_file = sender.objects.get(pk=instance.pk).Marksheet_10th
         new_file = instance.Marksheet_10th
         if not old_file == new_file:
-            if os.path.isfile(old_file.path) and old_file.path != 'media/default.jpg':
+            if os.path.isfile(old_file.path) and old_file.path.split("\\")[-1] != 'default.jpg':
                 print(old_file.path)
                 os.remove(old_file.path)
     except sender.DoesNotExist:
