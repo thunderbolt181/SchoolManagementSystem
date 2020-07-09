@@ -8,7 +8,8 @@ class StudentCreateForm(forms.ModelForm):
         model = student
         fields = ['Admission_no','Name','DOB','Gender','Profile_pic','Phone','Phone_Other','Email',
             'Class','Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation',
-            'Relegion','caste','Category','Address','Nationality','Note_about_Student']
+            'Relegion','caste','Category','Address','Nationality','Aadhar_Card',"Marksheet_10th",
+            "Marksheet_12th","Caste_Certificate",'Note_about_Student']
 
 class submit_fees(forms.Form):
     Amount_Paying = forms.IntegerField()

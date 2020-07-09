@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth.models import User
-
+from PIL import Image
+import os
+import shutil
 
 GENDER=(
     ("Male","Male"),
@@ -8,6 +10,7 @@ GENDER=(
 )
 
 CATEGORY=(
+    ("","Choice"),
     ("General","General"),
     ("OBC","OBC"),
     ("SC","SC"),
@@ -29,6 +32,10 @@ CLASS = (
     ("12","12")
 )
 
+def path_and_rename(instance, filename):
+    upload_to = f'student/{instance.Admission_no}_{instance.Name}/'
+    return os.path.join(upload_to, filename)
+
 class student(models.Model):
     Admission_no = models.IntegerField(default=00000,blank=False,unique=True)
     Name = models.CharField(max_length=100,blank=False)
@@ -47,25 +54,30 @@ class student(models.Model):
     caste = models.CharField(max_length=50,blank=False)
     Category = models.CharField(max_length=20,choices=CATEGORY,blank=False,default="")
     Nationality = models.CharField(max_length=50,blank=False,default="Indian")
-    Note_about_Student = models.CharField(max_length=500,blank=True)
+    Note_about_Student = models.TextField(max_length=500,blank=True)
     created_on = models.DateField(auto_now_add=True)
     created_by = models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
     remaning_fees = models.IntegerField(blank=False,default=-1)
     paid_fees = models.IntegerField(blank=False,default=0)
-    Profile_pic = models.ImageField(default="",blank=False,upload_to='Student_images')
+    Profile_pic = models.ImageField(blank=False,upload_to=path_and_rename)
+    Aadhar_Card = models.ImageField(default='default.jpg',blank=False,upload_to=path_and_rename)
+    Marksheet_10th = models.ImageField(default='default.jpg',blank=False,upload_to=path_and_rename)
+    Marksheet_12th = models.ImageField(default='default.jpg',blank=False,upload_to=path_and_rename)
+    Caste_Certificate = models.ImageField(default='default.jpg',blank=False,upload_to=path_and_rename)
 
     def delete(self, *args, **kwargs):
-        self.Profile_pic.delete()
+        path=f"media/student/{self.Admission_no}_{self.Name}"
+        shutil.rmtree(path)
         super().delete(*args,**kwargs)
 
     def save(self, *args, **kwargs):
         super().save()
         try :
-            img=Image.open(self.image.path)
-            if img.height > 256 or img.width > 256:
-                new_img = (256,256)
+            img=Image.open(self.Profile_pic.path)
+            if img.height > 1024 or img.width > 1024:
+                new_img = (1024,1024)
                 img.thumbnail(new_img)
-                img.save(self.image.path)
+                img.save(self.Profile_pic.path)
         except:
             pass
 

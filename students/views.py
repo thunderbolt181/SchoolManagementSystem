@@ -9,6 +9,7 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+import os
 
 @login_required
 def search_fun(request):
@@ -90,7 +91,7 @@ def submit_student_fees(request,student_id):
     if request.method == "POST":
         form = submit_fees(request.POST)
         if form.is_valid():
-            if form.cleaned_data["Amount_Paying"] > 0 and form.cleaned_data["Staff_username"] == request.user.username:
+            if form.cleaned_data["Amount_Paying"] <= student_obj.remaning_fees and form.cleaned_data["Amount_Paying"]>0  and form.cleaned_data["Staff_username"] == request.user.username:
                 student_obj.remaning_fees = student_obj.remaning_fees-form.cleaned_data["Amount_Paying"]
                 student_obj.save()
                 messages.success(request, 'Your Fees was Submitted successfully!')
@@ -107,6 +108,7 @@ def StudentDelete(request,student_id):
     try : 
         student_object = student.objects.get(Admission_no=student_id)
         student_object.delete()
-    except:
-        raise Http404("Post Does Not Exist")
+    except OSError:
+        raise Http404(OSError)
     return redirect('home')
+

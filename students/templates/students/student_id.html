@@ -36,7 +36,7 @@
         </div>
         <div class="p-1 w-100 m-2">
             <div class="table-responsive">
-                <table class="w-100 table">
+                <table class="w-100 table ">
                     <tr class="w-100 d-flex justify-content-around">
                         <td class="w-100 text-center font-weight-bold">
                             DOB
@@ -195,25 +195,30 @@
                             Submit Fees
                             </td>
                             <td class="w-100 text-center">
-                                <a href="{% url 'submit_student_fees' student.id %}" class="w-25 mt-4 mr-3">
-                                    <button class="btn btn-info w-100">Submit</button>
+                                <a href="{% url 'submit_student_fees' student.id %}" class="m-0 p-0">
+                                    <i class="fa fa-2x text-info fa-arrow-circle-right" aria-hidden="true"></i>
                                 </a>
                             </td>
                         </tr>
                     {% endif %}
+                    <tr class="w-100 d-flex justify-content-around">
+                        <td class="w-100 text-center font-weight-bold">
+                           View Student document
+                        </td>
+                        <td class="w-100 text-center">
+                            <a class="p-0 mt-1 m-1" data-toggle="modal" data-target="#modalDocument">
+                                <i class=" fa text-info fa-2x fa-arrow-circle-right" aria-hidden="true"></i>
+                            </a>
+                        </td>
+                    </tr>
                 </table>
             </div>
         </div>
-        <!-- <a href="{% url 'home' %}"><button>Back</button></a>  -->
     </div>
 </div>
-    <!--Modal: Login with Avatar Form-->
 <div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
         <div class="modal-content">
-            <!-- <div class="modal-header">
-            <img src="https://mdbootstrap.com/img/Photos/Avatars/img%20%281%29.jpg" alt="avatar" class="rounded-circle img-responsive">
-            </div> -->
             <div class="modal-body text-center mb-1">
             <h5 class="mt-1 mb-2">Are You Sure you want to delete this entry?</h5>
             <div class="text-center mt-4">
@@ -225,7 +230,67 @@
         </div>
     </div>
 </div>
-<!-- Modal -->
+<div class="modal fade" id="modalDocument" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center mb-1">
+            <h5 class="mt-1 mb-2">Choose a Document to View</h5>
+            <div class="text-center mt-4">
+                <table class="table table-borderless">
+                    {% if student.Aadhar_Card %}
+                        <tr class="w-100 d-flex justify-content-around">
+                            <td class="w-100 text-center font-weight-bold">
+                                Aadhar Card
+                            </td>
+                            <td class="w-100 text-center">
+                                <a href="{{student.Aadhar_Card.url}}" class="m-0 p-0">
+                                    <i class="fa fa-2x text-info fa-arrow-circle-right" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if student.Marksheet_10th %}
+                        <tr class="w-100 d-flex justify-content-around">
+                            <td class="w-100 text-center font-weight-bold">
+                                Marksheet 10th
+                            </td>
+                            <td class="w-100 text-center">
+                                <a href="{{student.Marksheet_10th.url}}" class="m-0 p-0">
+                                    <i class="fa fa-2x text-info fa-arrow-circle-right" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if student.Marksheet_12th %}
+                        <tr class="w-100 d-flex justify-content-around">
+                            <td class="w-100 text-center font-weight-bold">
+                                Marksheet 12th
+                            </td>
+                            <td class="w-100 text-center">
+                                <a href="{{student.Marksheet_12th.url}}" class="m-0 p-0">
+                                    <i class="fa fa-2x text-info fa-arrow-circle-right" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if student.Caste_Certificate %}
+                        <tr class="w-100 d-flex justify-content-around">
+                            <td class="w-100 text-center font-weight-bold">
+                                Caste Certificate
+                            </td>
+                            <td class="w-100 text-center">
+                                <a href="{{student.Caste_Certificate.url}}" class="m-0 p-0">
+                                    <i class="fa fa-2x text-info fa-arrow-circle-right" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                </table>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
  
