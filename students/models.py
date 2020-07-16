@@ -36,7 +36,7 @@ CLASS = (
 )
 
 def path_and_rename(instance, filename):
-    upload_to = f'student/{instance.id}_{instance.Name}/'
+    upload_to = f'student/{instance.Admission_no}_{instance.Name}/'
     return os.path.join(upload_to, filename)
 
 class student(models.Model):

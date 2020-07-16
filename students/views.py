@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,reverse
 from .models import student
-from .forms import StudentCreateForm, submit_fees, studentAdminForm
+from .forms import StudentCreateForm, submit_fees, studentAdminForm, studenteditAdminForm
 from django.contrib import messages
 from django.db.models import Q
 from django.http import Http404
@@ -82,7 +82,7 @@ def studentID(request,student_id):
 def Edit_Student_Detail(request,student_id):
     student_obj = student.objects.get(id=int(student_id))
     if request.method == 'POST':
-        form = studentAdminForm(request.POST,request.FILES,instance=student_obj)
+        form = studenteditAdminForm(request.POST,request.FILES,instance=student_obj)
         if form.is_valid():
             S = form.save(commit=False)
             S.created_by=request.user
@@ -90,7 +90,7 @@ def Edit_Student_Detail(request,student_id):
             S.save()
             return redirect('student-ID',student_obj.id)
     else:
-        form = studentAdminForm(instance=student_obj)
+        form = studenteditAdminForm(instance=student_obj)
     return render(request, 'students/student_form.html', {'student':student_obj,'form': form,'user':request.user})
 
 @login_required
