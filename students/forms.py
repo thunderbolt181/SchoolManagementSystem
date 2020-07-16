@@ -1,15 +1,31 @@
 from django import forms
 from students.models import student
 from django.contrib.auth.models import User
+from eav.forms import BaseDynamicEntityForm
+from eav.admin import BaseEntityAdmin
 
 class StudentCreateForm(forms.ModelForm):
 
     class Meta:
         model = student
-        fields = ['Admission_no','Name','DOB','Gender','Profile_pic','Phone','Phone_Other','Email',
-            'Class','Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation',
-            'Relegion','caste','Category','Address','Nationality','Aadhar_Card',"Marksheet_10th",
+        fields = ['Admission_no','Name','DOB','Gender','Phone','Phone_Other','Email',
+            'Class','Aadhar_Number','Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation',
+            'Relegion','caste','Category','Address','Nationality','Profile_pic','Aadhar_Card',"Marksheet_10th",
             "Marksheet_12th","Caste_Certificate",'Note_about_Student']
+
+class studentAdminForm(BaseDynamicEntityForm):
+    class Meta:
+        model = student
+        fields = ['Admission_no','Name','DOB','Gender','Phone','Phone_Other','Email',
+            'Class','Aadhar_Number','Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation',
+            'Relegion','caste','Category','Address','Nationality','Profile_pic','Aadhar_Card',"Marksheet_10th",
+            "Marksheet_12th","Caste_Certificate",'Note_about_Student']
+        widgets = {
+            'DOB': forms.TextInput(attrs={'type': 'date'}),
+        }
+
+class studentAdmin(BaseEntityAdmin):
+    form = studentAdminForm
 
 class submit_fees(forms.Form):
     Amount_Paying = forms.IntegerField()

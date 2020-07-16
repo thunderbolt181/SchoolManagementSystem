@@ -1,3 +1,4 @@
+import socket
 """
 Django settings for SchoolManagementSystem project.
 
@@ -25,7 +26,20 @@ SECRET_KEY = '=y+1o_5^7!+#z(4!7cmzx943u$a(f@58f&1rq7&i)d22p88_n+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+def get_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        s.connect(('10.255.255.255', 1))
+        IP = s.getsockname()[0]
+        print(f"****************** access this website at {IP}:8000 ***************************** ")
+        print(f"****************** or at localhost:8000 **************************************")
+    except:
+        IP = '127.0.0.1'
+    finally:
+        s.close()
+    return IP
+
+ALLOWED_HOSTS = [get_ip(),'127.0.0.1','localhost']
 
 
 # Application definition
@@ -39,7 +53,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'eav',
+    'crispy_forms',
 ]
+
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -135,3 +153,5 @@ STATIC_URL = '/static/'
 LOGIN_REDIRECT_URL='home'
 
 LOGIN_URL='login'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

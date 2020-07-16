@@ -1,8 +1,11 @@
-from django.db import models
-from django.contrib.auth.models import User
-from PIL import Image
 import os
 import shutil
+import eav
+from PIL import Image
+from django.db import models
+from django.contrib.auth.models import User
+from django.contrib import admin
+
 
 GENDER=(
     ("Male","Male"),
@@ -33,7 +36,7 @@ CLASS = (
 )
 
 def path_and_rename(instance, filename):
-    upload_to = f'student/{instance.Admission_no}_{instance.Name}/'
+    upload_to = f'student/{instance.id}_{instance.Name}/'
     return os.path.join(upload_to, filename)
 
 class student(models.Model):
@@ -59,6 +62,7 @@ class student(models.Model):
     created_by = models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
     remaning_fees = models.IntegerField(blank=False,default=-1)
     paid_fees = models.IntegerField(blank=False,default=0)
+    Aadhar_Number = models.IntegerField(blank=False,default=0)
     Profile_pic = models.ImageField(blank=False,upload_to=path_and_rename)
     Aadhar_Card = models.ImageField(default='default.jpg',blank=False,upload_to=path_and_rename)
     Marksheet_10th = models.ImageField(default='default.jpg',blank=False,upload_to=path_and_rename)
@@ -68,14 +72,15 @@ class student(models.Model):
     def delete(self, *args, **kwargs):
         path=f"media/student/{self.Admission_no}_{self.Name}"
         shutil.rmtree(path)
+        print("*"*50)
         super().delete(*args,**kwargs)
 
     def save(self, *args, **kwargs):
         super().save()
         try :
             img=Image.open(self.Profile_pic.path)
-            if img.height > 1024 or img.width > 1024:
-                new_img = (1024,1024)
+            if img.height > 512 or img.width > 512:
+                new_img = (512,512)
                 img.thumbnail(new_img)
                 img.save(self.Profile_pic.path)
         except:
@@ -83,3 +88,5 @@ class student(models.Model):
 
     def __str__(self):
         return self.Name
+
+eav.register(student)

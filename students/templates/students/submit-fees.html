@@ -1,4 +1,5 @@
 {% extends "students/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="wrap-login100" style="padding: 10px;">
     <div class="w-100 col border rounded overflow-hidden p-0 flex-md-row mb-2 shadow-sm h-md-250 position-relative">
@@ -18,17 +19,7 @@
                 {%csrf_token%}
                 <div class="media-body m-3">
                     <div class="media-body m-3">
-                        {% for field in form %}
-                            <table class="table table-borderless ">
-                                <tr>
-                                    <td>{{ field.label_tag }}</td>
-                                    <td> <div class="bg-secondary text-white p-1 m-0 border border-primary rounded">{{ field }}</td>
-                                </tr>
-                                {% if field.help_text %}
-                                    <p class="help">{{ field.help_text|safe }}</p>
-                                {% endif %}
-                            </table>
-                        {% endfor %}
+                        {{form|crispy}}
                         {% if form.errors %}
                             <div class="alert alert-danger" role="alert">
                                 <ul class='form-errors'>

@@ -1,37 +1,26 @@
 {% extends "students/base.html" %}
+{% load crispy_forms_tags %}
 {% block content %}
 <div class="wrap-login100" style="padding: 10px;">
-    <div class="col no-gutter border rounded overflow-hidden p-0 flex-md-row mb-2 shadow-sm h-md-250 position-relative">
-        <div class="w-100  flex-column position-static">
+    <div class="col rounded  p-0 flex-md-row mb-2 shadow-sm h-md-250 ">
+        <div class=" d-flex flex-column overflow-auto">
             <form class="form-group " method="POST" enctype="multipart/form-data">
                 {%csrf_token%}
-                <div class="media-body m-3">
-                    {% for field in form %}
-                        <table class="table table-borderless ">
-                            <tr>
-                                <td>{{ field.label_tag }}</td>
-                                <td> <div class="bg-secondary text-white p-1 m-0 border border-primary rounded">{{ field }}</td>
-                            </tr>
-                            {% if field.help_text %}
-                                <p class="help">{{ field.help_text|safe }}</p>
-                            {% endif %}
-                        </table>
-                    {% endfor %}
-                    {% if form.errors %}
-                        <div class="alert alert-danger" role="alert">
-                            <ul class='form-errors'>
-                                {% for error in form.errors %}
-                                    <li> Check {{ error }}</li>
-                                {% endfor %}
-                            </ul>
-                        </div>
-                    {% endif %}
-                </div>
+                {% if form.errors %}
+                    <div class="alert alert-danger" role="alert">
+                        <ul class='form-errors'>
+                            {% for error in s_form.errors %}
+                                <li> Check {{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endif %}
+                {{form|crispy}}
                 <div class="w-100 d-flex flex-row justify-content-around">
                     <button class="btn btn-info w-50 m-3">
-                        Save
+                        Update
                     </button>
-                    <a href="{% url 'student-ID' student.id %}" class=" w-50 m-3">
+                    <a href="{% url 'student-ID' student.id%}" class=" w-50 m-3">
                         <button type="button" class=" w-100 btn btn-danger w-50">
                             Cancel
                         </button>

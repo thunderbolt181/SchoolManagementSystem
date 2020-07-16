@@ -1,65 +1,74 @@
 {% extends "students/base.html" %}
-
 {% block content %}
-<div class="wrap-login100" style="padding: 10px;">
+<div class="wrap-login100 m-100" style="padding: 10px;">
     <div class=" w-100 p-1 bg-dark rounded border border-secondary overflow-hidden">
-        <div class="text-light mt-2 mb-2 w-100 text-center">
+        <div class="text-light mt-2 mb-2 h5 w-100 text-center">
             Student's Database
         </div>
-        <div class="d-flex justify-content-between">
-            <a href="{% url 'create-entry' %}" class="text-decoration-none">
-                <button class="btn btn-info">
-                    Create Entry
-                </button>
-            </a>
-            <form class="d-flex flex-row mt-md-0 p-0 justify-content-between" action="{% url 'search' %}" method="GET">
-                <input class="form-control mr-sm-2 " type="text" value='{{search}}' placeholder="Admission No." name='q'>
+        <div class=" justify-content-around">
+            {% if user.profile.Create_New_Entry %}
+                <a href="{% url 'create-entry' %}" class="text-decoration-none">
+                    <button class="btn btn-info">
+                        Create Entry
+                    </button>
+                </a>
+            {% endif %}
+            <form class="d-flex flex-row p-0 justify-content-center float-right" action="{% url 'search' %}" method="GET">
+                <input class="form-control wy-md-50 my-2 my-sm-0" type="text" value='{{search}}' placeholder="Search" name='q'>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
     </div>
-    <div class="w-100 rounded mt-1 pl-1 border border-secondary">
-        <div class="table-responsive">
-            <table class="table">
-                <tr>
-                    <td><strong>Admission No.</strong></td>
-                    <td><strong>Name</strong></td>
-                    <td><strong>Phone no</strong></td>
-                    <td><strong>Email</strong></td>
-                    <td></td>
-                </tr>
-                {% for student in students %}
-                    <tr >
-                        <td>{{ student.Admission_no }}</td>
-                        <td>{{ student.Name }}</td>
-                        <td>{{ student.Phone }}</td>
-                        <td>{{ student.Email }}</td>
-                        <td><a href="{% url 'student-ID' student.id %}"><Button class="btn btn-info">View</Button></a></td>
+    <div class="w-100 rounded mt-1 border border-secondary">
+        <div class="overflow-auto table-responsive ">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <td><strong>Admission No.</strong></td>
+                        <td><strong>Name</strong></td>
+                        <td><strong>Phone no</strong></td>
+                        <td><strong>Email</strong></td>
+                        <td></td>
                     </tr>
+                </thead>
+                {% for student in students %}
+                    <tbody>
+                        <tr class="">
+                            <td>{{ student.Admission_no }}</td>
+                            <td>{{ student.Name }}</td>
+                            <td>{{ student.Phone }}</td>
+                            <td>{{ student.Email }}</td>
+                            <td class="text-center">
+                                <a href="{% url 'student-ID' student.id %}">
+                                    <i class=" fa text-info fa-2x fa-arrow-circle-right" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </tbody>
                 {% endfor %}
             </table>
         </div>
         {% if students.has_other_pages %}
-                <ul class="pagination">
-                    {% if students.has_previous %}
-                        <li><a class="text-primery" href="?page={{ students.previous_page_number }}"><button class='btn btn-outline-info'>&laquo;</button></a></li>
+            <ul class="pagination">
+                {% if students.has_previous %}
+                    <li><a class="text-primery" href="?page={{ students.previous_page_number }}"><button class='btn btn-outline-info'>&laquo;</button></a></li>
+                {% else %}
+                    <li class="disabled"><button class='btn btn-secondary btn-outline-secondary'><span>&laquo;</span></button></li>
+                {% endif %}
+                {% for i in students.paginator.page_range %}
+                    {% if students.number == i %}
+                        <li class="active"><button class='btn btn-success btn-outline-success'><span>{{ i }} </span></button></li>
                     {% else %}
-                        <li class="disabled"><button class='btn btn-secondary btn-outline-secondary'><span>&laquo;</span></button></li>
+                        <li><a href="?page={{ i }}"><button class='btn btn-outline-info'>{{ i }}</button></a></li>
                     {% endif %}
-                    {% for i in students.paginator.page_range %}
-                        {% if students.number == i %}
-                            <li class="active"><button class='btn btn-success btn-outline-success'><span>{{ i }} </span></button></li>
-                        {% else %}
-                            <li><a href="?page={{ i }}"><button class='btn btn-outline-info'>{{ i }}</button></a></li>
-                        {% endif %}
-                    {% endfor %}
-                    {% if students.has_next %}
-                        <li><a href="?page={{ students.next_page_number }}"><button class='btn btn-outline-info'>&raquo;</button></a></li>
-                    {% else %}
-                        <li class="disabled"><button class='btn btn-secondary btn-outline-secondary'><span>&raquo;</span></button></li>
-                    {% endif %}
-                </ul>
-            {% endif %}
+                {% endfor %}
+                {% if students.has_next %}
+                    <li><a href="?page={{ students.next_page_number }}"><button class='btn btn-outline-info'>&raquo;</button></a></li>
+                {% else %}
+                    <li class="disabled"><button class='btn btn-secondary btn-outline-secondary'><span>&raquo;</span></button></li>
+                {% endif %}
+            </ul>
+        {% endif %}
     </div>
 </div>
 {% endblock %}
