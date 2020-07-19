@@ -26,8 +26,8 @@
                     <tr>
                         <td><strong>Admission No.</strong></td>
                         <td><strong>Name</strong></td>
+                        <td><strong>Fathers Name</strong></td>
                         <td><strong>Phone no</strong></td>
-                        <td><strong>Email</strong></td>
                         <td></td>
                     </tr>
                 </thead>
@@ -36,8 +36,8 @@
                         <tr class="">
                             <td>{{ student.Admission_no }}</td>
                             <td>{{ student.Name }}</td>
+                            <td>{{ student.Fathers_Name }}</td>
                             <td>{{ student.Phone }}</td>
-                            <td>{{ student.Email }}</td>
                             <td class="text-center">
                                 <a href="{% url 'student-ID' student.id %}">
                                     <i class=" fa text-info fa-2x fa-arrow-circle-right" aria-hidden="true"></i>

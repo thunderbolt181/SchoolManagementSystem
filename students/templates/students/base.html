@@ -10,22 +10,21 @@
         <meta name="desctiption" content="school database">
         <!-- Bootstrap CSS -->
         <link rel="icon" type="image/png" href="{% static 'students/images/icons/favicon.ico'%}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'students/vendor/bootstrap/css/bootstrap.min.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'students/css/bootstrap.min.css'%}">
         <link rel="stylesheet" type="text/css" href="{% static 'students/fonts/font-awesome-4.7.0/css/font-awesome.min.css'%}">
-        <!-- <link rel="stylesheet" type="text/css" href="{% static 'students/css/util.css'%}"> -->
         <link rel="stylesheet" type="text/css" href="{% static 'students/css/main.css'%}">
         <link rel="stylesheet" type="text/css" href="{% static 'students/css/util.css'%}">
         <title>Students</title>
         
     </head>
     <body >
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
             <div class="container">
                 <div class='navbar-brand'>
-                    <a class="navbar-brand font-weight-bolder" href="{% url 'home' %}">School Management System</a>
+                    <a style="font-size: 19px;" class="navbar-brand font-weight-bolder w-75" href="{% url 'home' %}">School Management System</a>
                 </div>
                 {% if user.is_authenticated %}
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler m-0" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                     <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -33,24 +32,39 @@
                             <li class="mt-2 nav-item text-primary">
                                 {{user.username}}
                             </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                            </li>
+                            {% if '' in request.path %}
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="modal" data-target="#modalLoginAvatar">Export Data</a>
+                                </li>                                
+                            {% endif %}
+                                <li class="nav-item">
+                                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                                </li>
+                            {% if '/print-id/' in request.path %}
+                                <li class="nav-item">
+                                    <a class="p-0 mt-1 m-1" onClick="window.print()"}" >
+                                        <i class=" fa text-primary fa-2x fa-print" aria-hidden="true"></i>
+                                    </a>
+                                </li>
+                            {% endif %}
                         </ul>
                     </div>
                 {% endif %}
             </div>
         </nav> 
-        <!-- <div class="container mt-2 p-1 bg-light border rounded">  -->
         <div class="limiter">
-            <div class="container-login100 ">
+            <div class="container-login100 " style="padding-top: 80px;">
                 {% block content %}{% endblock %} 
             </div>
         </div>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="{% static 'students/js/jquery-3.2.1.slim.min.js'%}"></script>
+        <script src="{% static 'students/jquery/jquery-3.5.1.js'%}"></script>
         <script src="{% static 'students/js/bootstrap.min.js'%}"></script>
+        <script src="{% static 'students/js/util.js'%}"></script>
+        <script src="{% static 'students/js/popper.js'%}"></script>
+        <script src="{% static 'students/js/main.js'%}"></script>
         <script type="text/javascript" language="javascript">
             var x = document.getElementsByClassName("vDateField");
             var y = document.getElementsByClassName("vTimeField");
@@ -59,11 +73,41 @@
                 y[i].type='time';
             }
         </script>
-        <!-- <script src="{% static 'students/vendor/bootstrap/js/popper.js'%}"></script> -->
-        <!-- <script src="{% static 'students/vendor/bootstrap/js/bootstrap.min.js'%}"></script> -->
-        <!-- <script src="{% static 'students/vendor/select2/select2.min.js'%}"></script> -->
-        <!-- <script src="{% static 'students/vendor/tilt/tilt.jquery.min.js'%}"></script> -->
-        <!-- <script src="{% static 'students/vendor/jquery/jquery-3.2.1.min.js'%}"></script> -->
-        <!-- <script src="{% static 'students/js/main.js'%}"></script> -->
+        <script>
+            function openCity(evt, cityName) {
+                // Declare all variables
+                var i, tabcontent, tablinks;
+
+                // Get all elements with class="tabcontent" and hide them
+                tabcontent = document.getElementsByClassName("tabcontent");
+                for (i = 0; i < tabcontent.length; i++) {
+                    tabcontent[i].style.display = "none";
+                }
+
+                // Get all elements with class="tablinks" and remove the class "active"
+                tablinks = document.getElementsByClassName("tablinks");
+                for (i = 0; i < tablinks.length; i++) {
+                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                }
+
+                // Show the current tab, and add an "active" class to the button that opened the tab
+                document.getElementById(cityName).style.display = "block";
+                evt.currentTarget.className += " active";
+            }
+        </script>
     </body>
 </html>
+<div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-body text-center mb-1">
+            <h5 class="mt-1 mb-2">The data will be exported in a .csv file</h5>
+            <div class="text-center mt-4">
+                <a href="{% url 'create-backup' %}">
+                    <button class="btn btn-danger mt-1">Export Data</button>
+                </a>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -8,7 +8,9 @@ from django.views.generic import UpdateView
 from django.contrib.auth.decorators import login_required
 from django.contrib.messages.views import SuccessMessageMixin
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.views.static import serve
 import os
+import csv
 
 @login_required
 def search_fun(request):
@@ -67,7 +69,7 @@ def create_entry(request):
             S.created_by=request.user
             S.remaning_fees=20000
             S.save()
-            return redirect("home")
+            return redirect('student-ID',S.id)
     else:
         s_form = studentAdminForm()
     return render(request, 'students/Create_post.html', {'s_form': s_form,'user':request.user})
@@ -116,3 +118,30 @@ def StudentDelete(request,student_id):
     student_object = student.objects.get(id=int(student_id))
     student_object.delete()
     return redirect('home')
+
+@login_required
+def PrintID(request,student_id):
+    user = request.user
+    student_obj = student.objects.get(id=int(student_id))
+    s_form = studentAdminForm(instance=student_obj)
+    return render(request,"students/print_id.html",{'student':student_obj,'s_form':s_form,'user':user})
+
+@login_required
+def CreateBackup(request):
+    fieldnames = list()
+    fieldvalue = dict()
+    with open('static/downloads/students.csv','w') as csv_file:
+        form = studentAdminForm()
+        for j in form:
+            fieldnames.append(j.name)
+        writer = csv.DictWriter(csv_file, fieldnames=fieldnames,lineterminator = '\n')
+        writer.writeheader()
+        for i in student.objects.all():
+            for j in fieldnames:
+                try:
+                    fieldvalue[f'{j}']=(getattr(i, f'{j}'))
+                except:
+                    fieldvalue[f'{j}']=(getattr(i.eav, f'{j}'))
+            writer.writerow(fieldvalue)
+    filepath = 'static/downloads/students.csv'
+    return serve(request, os.path.basename(filepath),os.path.dirname(filepath))

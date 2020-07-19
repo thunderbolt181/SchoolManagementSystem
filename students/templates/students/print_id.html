@@ -1,0 +1,52 @@
+{% extends "students/base.html" %}
+{% block content %}
+<div class="wrap-login100 w-100 p-2">
+    <div class="w-100 rounded pl-1 pr-1  ">
+        <div class="m-3">
+            {% if messages %}
+                <div class="alert alert-success">
+                    <ul class="messages list-unstyled">
+                        {% for message in messages %}
+                        <li class="{{ message.tags }}">{{ message }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+        </div>
+        <div class="w-100 d-flex">
+            <div class="row w-100 d-flex flex-row position-static">
+                <div class="media-left ml-5 mt-5 pl-5" style="height: 200px;overflow:hidden;">
+                    <strong class="h1 my-2 py-2 text-primary w-50">{{student.Name}}</strong>
+                    <em class="text-muted mt-3 mr-5"><h5 class="mt-3 mr-5">Admission No. :<span class="text-primary ">{{student.Admission_no}}</span></h5></em>
+                </div>
+                <div class="w-100 media-body mt-2">
+                    <img class="float-right img-fluid" style="width:200px; margin: 10px;" src="{{student.Profile_pic.url}}"> 
+                </div>
+            </div>
+        </div>
+        <input type="button" media='print'>
+        <div class="p-1 w-100 ">
+            <div class="table-responsive">
+                <form>
+                    {% csrf_token %}
+                    <table class="w-100 table table-hover">
+                        {% for field in s_form %}
+                            {% if field.name != 'Admission_no' and field.name != 'Name' and field.name != 'Profile_pic' and field.name != 'Aadhar_Card' and field.name != 'Marksheet_10th' and field.name != 'Marksheet_12th' and field.name != 'Caste_Certificate' %}
+                                <tr class="w-100 d-flex justify-content-around">
+                                    <td class="w-100 text-center font-weight-bold">
+                                        {{field.label}}
+                                    </td>
+                                    <td class="w-100 text-center teext-dark">
+                                        <p>{{field.value}}</p>
+                                    </td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    </table>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+ 

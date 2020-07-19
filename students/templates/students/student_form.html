@@ -4,23 +4,75 @@
 <div class="wrap-login100" style="padding: 10px;">
     <div class="col rounded  p-0 flex-md-row mb-2 shadow-sm h-md-250 ">
         <div class=" d-flex flex-column overflow-auto">
-            <form class="form-group " method="POST" enctype="multipart/form-data">
-                {%csrf_token%}
-                {% if form.errors %}
-                    <div class="alert alert-danger" role="alert">
-                        <ul class='form-errors'>
-                            {% for error in s_form.errors %}
-                                <li> Check {{ error }}</li>
+            <div class=" w-100 p-1 bg-success rounded ">
+                <div class="text-light mt-2 mb-2 h5 w-100 text-center">
+                    Update Details
+                </div>
+            </div>
+            {% if s_form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    <ul class='form-errors'>
+                        {% for error in s_form.errors %}
+                            <li> Check {{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            {% endif %}
+            <div class="m-0 mt-2 border rounded border-primary" style="padding:3px;">
+                <ul class="nav nav-pills nav-fill">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">Student</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">Parents</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">Documents</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">Extra</a>
+                    </li>
+                </ul>
+            </div>
+            <form method="POST"  enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class=" pt-3">
+                    <div class="tab-content" id="v-pills-tabContent">
+                        <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                            {% for field in form %}
+                                {% if field.name == 'Admission_no' or field.name == 'Name' or field.name == 'Email' or field.name == 'DOB' or field.name == 'Address' or field.name == 'Gender' or field.name == 'Class' or field.name == 'Aadhar_Number' or field.name == 'Relegion' or field.name == 'caste' or field.name == 'Category' or field.name == 'Nationality' %}
+                                    {{field|as_crispy_field}}
+                                {% endif %}
                             {% endfor %}
-                        </ul>
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+                            {% for field in form %}
+                                {% if field.name == 'Fathers_Name' or field.name == 'Fathers_Occupation' or field.name == 'Mothers_Name' or field.name == 'Mothers_Occupation' or field.name == 'Phone' or field.name == 'Phone_Other' %}
+                                    {{field|as_crispy_field}}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+                            {% for field in form %}
+                                {% if field.name == 'Profile_pic' or field.name == 'Aadhar_Card' or field.name == 'Marksheet_10th' or field.name == 'Marksheet_12th' or field.name == 'Caste_Certificate' %}
+                                    {{field|as_crispy_field}}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+                            {% for field in form %}
+                                {% if field.name != 'Profile_pic' and field.name != 'Aadhar_Card' and field.name != 'Marksheet_10th' and field.name != 'Marksheet_12th' and field.name != 'Caste_Certificate' and field.name != 'Admission_no' and field.name != 'Name' and field.name != 'Email' and field.name != 'DOB' and field.name != 'Gender' and field.name != 'Class' and field.name != 'Aadhar_Number' and field.name != 'Relegion' and field.name != 'caste' and field.name != 'Category' and field.name != 'Nationality' and field.name != 'Fathers_Name' and field.name != 'Fathers_Occupation' and field.name != 'Mothers_Name' and field.name != 'Mothers_Occupation' and field.name != 'Phone' and field.name != 'Phone_Other' and field.name != 'Address'%}
+                                    {{field|as_crispy_field}}
+                                {% endif %}
+                            {% endfor %}
+                        </div>
                     </div>
-                {% endif %}
-                {{form|crispy}}
+                </div>
                 <div class="w-100 d-flex flex-row justify-content-around">
                     <button class="btn btn-info w-50 m-3">
-                        Update
+                        Create
                     </button>
-                    <a href="{% url 'student-ID' student.id%}" class=" w-50 m-3">
+                    <a href="{% url 'home' %}" class=" w-50 m-3">
                         <button type="button" class=" w-100 btn btn-danger w-50">
                             Cancel
                         </button>

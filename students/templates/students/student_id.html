@@ -1,7 +1,10 @@
 {% extends "students/base.html" %}
 {% block content %}
-<div class="wrap-login100 w-100" style="padding: 10px;">
+<div class="wrap-login100 w-100 p-2">
     <div class="w-100 rounded pl-1 pr-1 border border-secondary">
+        <a class="p-0 mt-1 m-1 float-right" href="{% url 'print-ID' student.id %}" >
+            <i class=" fa text-primary fa-2x fa-print" aria-hidden="true"></i>
+        </a>
         <div class="m-3">
             {% if messages %}
                 <div class="alert alert-success">
@@ -38,7 +41,7 @@
                     {% csrf_token %}
                     <table class="w-100 table table-hover">
                         {% for field in s_form %}
-                            {% if field.name != 'Profile_pic' and field.name != 'Aadhar_Card' and field.name != 'Marksheet_10th' and field.name != 'Marksheet_12th' and field.name != 'Caste_Certificate' %}
+                            {% if field.name != 'Admission_no' and field.name != 'Name' and field.name != 'Profile_pic' and field.name != 'Aadhar_Card' and field.name != 'Marksheet_10th' and field.name != 'Marksheet_12th' and field.name != 'Caste_Certificate' %}
                                 <tr class="w-100 d-flex justify-content-around">
                                     <td class="w-100 text-center font-weight-bold">
                                         {{field.label}}
@@ -49,42 +52,48 @@
                                 </tr>
                             {% endif %}
                         {% endfor %}
-                    </table>
-                </form>
-                <table class="w-100 table table-hover">
-                    {% if user.profile.accoutant %}
                         <tr class="w-100 d-flex justify-content-around">
                             <td class="w-100 text-center font-weight-bold">
-                            Submit Fees
+                            Remaining Fees
+                            </td>
+                            <td class="w-100 h6 text-center">
+                                {{student.remaning_fees}}
+                            </td>
+                        </tr>
+                        {% if user.profile.accoutant %}
+                            <tr class="w-100 d-flex justify-content-around">
+                                <td class="w-100 text-center font-weight-bold">
+                                Submit Fees
+                                </td>
+                                <td class="w-100 text-center">
+                                    <a href="{% url 'submit_student_fees' student.id %}" class="m-0 p-0">
+                                        <i class="fa fa-2x text-info fa-arrow-circle-right" aria-hidden="true"></i>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        <tr class="w-100 d-flex justify-content-around">
+                            <td class="w-100 text-center font-weight-bold">
+                            View Student document
                             </td>
                             <td class="w-100 text-center">
-                                <a href="{% url 'submit_student_fees' student.id %}" class="m-0 p-0">
-                                    <i class="fa fa-2x text-info fa-arrow-circle-right" aria-hidden="true"></i>
+                                <a class="p-0 mt-1 m-1" data-toggle="modal" data-target="#modalDocument">
+                                    <i class=" fa text-info fa-2x fa-arrow-circle-right" aria-hidden="true"></i>
                                 </a>
                             </td>
                         </tr>
-                    {% endif %}
-                    <tr class="w-100 d-flex justify-content-around">
-                        <td class="w-100 text-center font-weight-bold">
-                           View Student document
-                        </td>
-                        <td class="w-100 text-center">
-                            <a class="p-0 mt-1 m-1" data-toggle="modal" data-target="#modalDocument">
-                                <i class=" fa text-info fa-2x fa-arrow-circle-right" aria-hidden="true"></i>
-                            </a>
-                        </td>
-                    </tr>
-                    <tr class="w-100 d-flex justify-content-around">
-                        <td class="w-100 text-center font-weight-bold">
-                           Home
-                        </td>
-                        <td class="w-100 text-center">
-                            <a class="p-0 mt-1 m-1" href="{% url 'home' %}">
-                                <i class=" fa text-warning fa-2x fa-arrow-circle-left" aria-hidden="true"></i>
-                            </a>
-                        </td>
-                    </tr>
-                </table>
+                        <tr class="w-100 d-flex justify-content-around">
+                            <td class="w-100 text-center font-weight-bold">
+                            Home
+                            </td>
+                            <td class="w-100 text-center">
+                                <a class="p-0 mt-1 m-1" href="{% url 'home' %}">
+                                    <i class=" fa text-warning fa-2x fa-arrow-circle-left" aria-hidden="true"></i>
+                                </a>
+                            </td>
+                        </tr>
+                    </table>
+                </form>
             </div>
         </div>
     </div>

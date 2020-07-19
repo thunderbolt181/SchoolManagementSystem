@@ -8,17 +8,17 @@ class StudentCreateForm(forms.ModelForm):
 
     class Meta:
         model = student
-        fields = ['Admission_no','Name','DOB','Gender','Phone','Phone_Other','Email',
-            'Class','Aadhar_Number','Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation',
-            'Relegion','caste','Category','Address','Nationality','Profile_pic','Aadhar_Card',"Marksheet_10th",
+        fields = ['Admission_no','Name','DOB','Gender','Email','Class','Aadhar_Number',
+            'Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation',
+            'Phone','Phone_Other','Relegion','caste','Category','Address','Nationality','Profile_pic','Aadhar_Card',"Marksheet_10th",
             "Marksheet_12th","Caste_Certificate",'Note_about_Student']
 
 class studentAdminForm(BaseDynamicEntityForm):
     class Meta:
         model = student
-        fields = ['Admission_no','Name','DOB','Gender','Phone','Phone_Other','Email',
-            'Class','Aadhar_Number','Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation',
-            'Relegion','caste','Category','Address','Nationality','Profile_pic','Aadhar_Card',"Marksheet_10th",
+        fields = ['Admission_no','Name','DOB','Gender','Email','Class','Aadhar_Number',
+            'Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation',
+            'Phone','Phone_Other','Relegion','caste','Category','Address','Nationality','Profile_pic','Aadhar_Card',"Marksheet_10th",
             "Marksheet_12th","Caste_Certificate",'Note_about_Student']
         widgets = {
             'DOB': forms.TextInput(attrs={'type': 'date'}),
@@ -27,9 +27,9 @@ class studentAdminForm(BaseDynamicEntityForm):
 class studenteditAdminForm(BaseDynamicEntityForm):
     class Meta:
         model = student
-        fields = ['Name','DOB','Gender','Phone','Phone_Other','Email','Class','Aadhar_Number',
-            'Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation','Relegion',
-            'caste','Category','Address','Nationality','Profile_pic','Aadhar_Card',"Marksheet_10th",
+        fields = ['Name','DOB','Gender','Email','Class','Aadhar_Number',
+            'Fathers_Name','Fathers_Occupation','Mothers_Name','Mothers_Occupation',
+            'Phone','Phone_Other','Relegion','caste','Category','Address','Nationality','Profile_pic','Aadhar_Card',"Marksheet_10th",
             "Marksheet_12th","Caste_Certificate",'Note_about_Student']
         widgets = {
             'DOB': forms.TextInput(attrs={'type': 'date'}),

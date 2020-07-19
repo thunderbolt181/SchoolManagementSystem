@@ -40,7 +40,7 @@ def path_and_rename(instance, filename):
     return os.path.join(upload_to, filename)
 
 class student(models.Model):
-    Admission_no = models.IntegerField(default=00000,blank=False,unique=True)
+    Admission_no = models.IntegerField(default="",blank=False,unique=True)
     Name = models.CharField(max_length=100,blank=False)
     DOB = models.DateField(blank=False,default="YYYY-MM-DD")
     Gender =models.CharField(max_length=10,choices=GENDER,blank=False)
@@ -62,7 +62,7 @@ class student(models.Model):
     created_by = models.ForeignKey(User,null=True,on_delete=models.SET_NULL)
     remaning_fees = models.IntegerField(blank=False,default=-1)
     paid_fees = models.IntegerField(blank=False,default=0)
-    Aadhar_Number = models.IntegerField(blank=False,default=0)
+    Aadhar_Number = models.IntegerField(blank=True,default=0)
     Profile_pic = models.ImageField(blank=False,upload_to=path_and_rename)
     Aadhar_Card = models.ImageField(default='default.jpg',blank=False,upload_to=path_and_rename)
     Marksheet_10th = models.ImageField(default='default.jpg',blank=False,upload_to=path_and_rename)
