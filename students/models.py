@@ -1,10 +1,8 @@
 import os
 import shutil
-import eav
 from PIL import Image
 from django.db import models
 from django.contrib.auth.models import User
-from django.contrib import admin
 
 
 GENDER=(
@@ -88,5 +86,3 @@ class student(models.Model):
 
     def __str__(self):
         return self.Name
-
-eav.register(student)

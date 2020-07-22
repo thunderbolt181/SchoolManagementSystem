@@ -14,26 +14,26 @@
         <link rel="stylesheet" type="text/css" href="{% static 'students/fonts/font-awesome-4.7.0/css/font-awesome.min.css'%}">
         <link rel="stylesheet" type="text/css" href="{% static 'students/css/main.css'%}">
         <link rel="stylesheet" type="text/css" href="{% static 'students/css/util.css'%}">
+        <link rel="stylesheet" type="text/css" href="{% static 'students/css/home.css'%}">
         <title>Students</title>
-        
     </head>
-    <body style="background-color: black;">
+    <body style="background-color: rgb(0, 0, 0);">
         <header>
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background-color: black;">
+            <nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background-color: rgb(0, 0, 0);" >
                 <div class="container">
                     <div class='navbar-brand'>
                         <a style="font-size: 19px;" class="navbar-brand font-weight-bolder w-75" href="{% url 'home' %}">School Management System</a>
                     </div>
-                    {% if user.is_authenticated %}
                     <button class="navbar-toggler m-0" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
+                    {% if user.is_authenticated %}
                         <div class="collapse navbar-collapse" id="navbarCollapse">
                             <ul class="navbar-nav ml-auto">
                                 <li class="mt-2 nav-item text-primary">
                                     {{user.username}}
                                 </li>
-                                {% if '' in request.path %}
+                                {% if 'students/' in request.path %}
                                     <li class="nav-item">
                                         <a class="nav-link" data-toggle="modal" data-target="#modalLoginAvatar">Export Data</a>
                                     </li>                                
@@ -50,14 +50,23 @@
                                 {% endif %}
                             </ul>
                         </div>
+                    {% else %}
+                        <div class="collapse navbar-collapse" id="navbarCollapse">
+                            <ul class="navbar-nav ml-auto">
+                                <li class="nav-item">
+                                    <a class="nav-link p-0 mt-1 m-1" data-toggle="modal" data-target="#modalLoginAvatar">Login</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link p-0 mt-1 m-1" data-toggle="modal" data-target="#modalLoginAvatar">Register</a>
+                                </li>
+                            </ul>
+                        </div>
                     {% endif %}
                 </div>
             </nav>
         </header>
-        <div class="container"  style=" background-color: black;">
-            <div class="" style="padding-top: 80px; background-color: black;">
-                {% block content %}{% endblock %} 
-            </div>
+        <div  >
+            {% block content %}{% endblock %}
         </div>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->

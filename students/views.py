@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,reverse
 from .models import student
-from .forms import StudentCreateForm, submit_fees, studentAdminForm, studenteditAdminForm
+from .forms import StudentCreateForm, submit_fees
 from django.contrib import messages
 from django.db.models import Q
 from django.http import Http404
@@ -19,7 +19,7 @@ def search_fun(request):
             search = request.GET['q']
             lookup = Q(Admission_no__icontains = search) | Q(Address__icontains = search) | Q(Name__icontains = search) | Q(Aadhar_Number__icontains = search)
             results = student.objects.filter(lookup).distinct()
-            if len(results) !=0:
+            if len(results) != 0:
                 page = request.GET.get('page', 1)
                 paginator = Paginator(results, 20)
                 try:
@@ -63,7 +63,7 @@ def home(request):
 @login_required
 def create_entry(request):
     if request.method == 'POST':
-        s_form = studentAdminForm(request.POST,request.FILES)
+        s_form = StudentCreateForm(request.POST,request.FILES)
         if s_form.is_valid():
             S = s_form.save(commit=False)
             S.created_by=request.user
@@ -71,20 +71,20 @@ def create_entry(request):
             S.save()
             return redirect('student-ID',S.id)
     else:
-        s_form = studentAdminForm()
+        s_form = StudentCreateForm()
     return render(request, 'students/Create_post.html', {'s_form': s_form,'user':request.user})
 
 @login_required
 def studentID(request,student_id):
     user = request.user 
     student_obj = student.objects.get(id=int(student_id))
-    s_form = studentAdminForm(instance=student_obj)
+    s_form = StudentCreateForm(instance=student_obj)
     return render(request,"students/student_id.html",{'student':student_obj,'s_form':s_form,'user':user})
 
 def Edit_Student_Detail(request,student_id):
     student_obj = student.objects.get(id=int(student_id))
     if request.method == 'POST':
-        form = studenteditAdminForm(request.POST,request.FILES,instance=student_obj)
+        form = StudentCreateForm(request.POST,request.FILES,instance=student_obj)
         if form.is_valid():
             S = form.save(commit=False)
             S.created_by=request.user
@@ -92,7 +92,7 @@ def Edit_Student_Detail(request,student_id):
             S.save()
             return redirect('student-ID',student_obj.id)
     else:
-        form = studenteditAdminForm(instance=student_obj)
+        form = StudentCreateForm(instance=student_obj)
     return render(request, 'students/student_form.html', {'student':student_obj,'form': form,'user':request.user})
 
 @login_required
@@ -123,7 +123,7 @@ def StudentDelete(request,student_id):
 def PrintID(request,student_id):
     user = request.user
     student_obj = student.objects.get(id=int(student_id))
-    s_form = studentAdminForm(instance=student_obj)
+    s_form = StudentCreateForm(instance=student_obj)
     return render(request,"students/print_id.html",{'student':student_obj,'s_form':s_form,'user':user})
 
 @login_required
@@ -131,7 +131,7 @@ def CreateBackup(request):
     fieldnames = list()
     fieldvalue = dict()
     with open('static/downloads/students.csv','w') as csv_file:
-        form = studentAdminForm()
+        form = StudentCreateForm()
         for j in form:
             fieldnames.append(j.name)
         writer = csv.DictWriter(csv_file, fieldnames=fieldnames,lineterminator = '\n')

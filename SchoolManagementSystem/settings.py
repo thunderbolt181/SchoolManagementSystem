@@ -45,6 +45,7 @@ ALLOWED_HOSTS = [get_ip(),'127.0.0.1','localhost']
 # Application definition
 
 INSTALLED_APPS = [
+    'schools.apps.SchoolsConfig',
     'students.apps.StudentsConfig',
     'users.apps.UsersConfig',
     'django.contrib.admin',
@@ -53,7 +54,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'eav',
     'crispy_forms',
 ]
 
@@ -95,8 +95,12 @@ WSGI_APPLICATION = 'SchoolManagementSystem.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'smsdb',
+        'HOST': '127.0.0.1',
+        'PORT': '3306',
+        'USER': 'root',
+        'PASSWORD': '',
     }
 }
 

@@ -1,29 +1,29 @@
-{% extends "students/base.html" %}
+{% extends "schools/base.html" %}
 {% block content %}
-<div class="wrap-login100 m-100" style="padding: 10px;">
-    <div class=" w-100 p-1 bg-dark rounded border border-secondary overflow-hidden">
-        <div class="text-light mt-2 mb-2 h5 w-100 text-center">
+<main class="container p-2" role="main" style="margin-top: 40px;">
+    <div class=" w-100 p-1 pb-2 bg-dark rounded border border-secondary overflow-hidden">
+        <div class="text-white mt-2 mb-2 h5 w-100 text-center">
             Student's Database
         </div>
         <div class=" justify-content-around">
             {% if user.profile.Create_New_Entry %}
-                <a href="{% url 'create-entry' %}" class="text-decoration-none">
+                <a href="{% url 'create-entry' %}" class="text-decoration-none ml-2">
                     <button class="btn btn-info">
                         Create Entry
                     </button>
                 </a>
             {% endif %}
             <form class="d-flex flex-row p-0 justify-content-center float-right" action="{% url 'search' %}" method="GET">
-                <input class="form-control wy-md-50 my-2 my-sm-0" type="text" value='{{search}}' placeholder="Search" name='q'>
+                <input class="form-control mx-2 wy-md-50 my-2 my-sm-0" type="text" value='{{search}}' placeholder="Search" name='q'>
                 <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
             </form>
         </div>
     </div>
-    <div class="w-100 rounded mt-1 border border-secondary">
-        <div class="overflow-auto table-responsive ">
-            <table class="table table-hover">
+    <div class="w-100 rounded mt-2 border border-secondary">
+        <div class="overflow-auto table-responsive bg-light">
+            <table class="table m-0 table-hover bg-dark ">
                 <thead>
-                    <tr>
+                    <tr class=" text-light">
                         <td><strong>Admission No.</strong></td>
                         <td><strong>Name</strong></td>
                         <td><strong>Fathers Name</strong></td>
@@ -33,7 +33,7 @@
                 </thead>
                 {% for student in students %}
                     <tbody>
-                        <tr class="">
+                        <tr class="text-light">
                             <td>{{ student.Admission_no }}</td>
                             <td>{{ student.Name }}</td>
                             <td>{{ student.Fathers_Name }}</td>
@@ -70,5 +70,5 @@
             </ul>
         {% endif %}
     </div>
-</div>
+</main>
 {% endblock %}

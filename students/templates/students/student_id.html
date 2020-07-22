@@ -1,6 +1,6 @@
-{% extends "students/base.html" %}
+{% extends "schools/base.html" %}
 {% block content %}
-<div class="wrap-login100 w-100 p-2">
+<main class="container p-1 bg-dark text-white rounded" role="main" style="margin-top: 40px;">
     <div class="w-100 rounded pl-1 pr-1 border border-secondary">
         <a class="p-0 mt-1 m-1 float-right" href="{% url 'print-ID' student.id %}" >
             <i class=" fa text-primary fa-2x fa-print" aria-hidden="true"></i>
@@ -39,7 +39,7 @@
             <div class="table-responsive">
                 <form>
                     {% csrf_token %}
-                    <table class="w-100 table table-hover">
+                    <table class="w-100 table text-white">
                         {% for field in s_form %}
                             {% if field.name != 'Admission_no' and field.name != 'Name' and field.name != 'Profile_pic' and field.name != 'Aadhar_Card' and field.name != 'Marksheet_10th' and field.name != 'Marksheet_12th' and field.name != 'Caste_Certificate' %}
                                 <tr class="w-100 d-flex justify-content-around">
@@ -47,7 +47,7 @@
                                         {{field.label}}
                                     </td>
                                     <td class="w-100 text-center">
-                                        <p>{{field.value}}</p>
+                                        <p class="text-white">{{field.value}}</p>
                                     </td>
                                 </tr>
                             {% endif %}
@@ -56,7 +56,7 @@
                             <td class="w-100 text-center font-weight-bold">
                             Remaining Fees
                             </td>
-                            <td class="w-100 h6 text-center">
+                            <td class="w-100 h6 text-center text-white">
                                 {{student.remaning_fees}}
                             </td>
                         </tr>
@@ -76,7 +76,7 @@
                             <td class="w-100 text-center font-weight-bold">
                             View Student document
                             </td>
-                            <td class="w-100 text-center">
+                            <td class="w-100 text-center text-white">
                                 <a class="p-0 mt-1 m-1" data-toggle="modal" data-target="#modalDocument">
                                     <i class=" fa text-info fa-2x fa-arrow-circle-right" aria-hidden="true"></i>
                                 </a>
@@ -87,7 +87,7 @@
                             Home
                             </td>
                             <td class="w-100 text-center">
-                                <a class="p-0 mt-1 m-1" href="{% url 'home' %}">
+                                <a class="p-0 mt-1 m-1" href="{% url 'student' %}">
                                     <i class=" fa text-warning fa-2x fa-arrow-circle-left" aria-hidden="true"></i>
                                 </a>
                             </td>
@@ -97,7 +97,7 @@
             </div>
         </div>
     </div>
-</div>
+</main>
 <div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
         <div class="modal-content">
