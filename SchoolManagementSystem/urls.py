@@ -6,9 +6,10 @@ from django.conf import settings
 from users import views as user_view
 
 urlpatterns = [
-    path('admin/', admin.site.urls),       
+    path('admin/', admin.site.urls),
+    path('login/', user_view.login, name='login'),  
     path('logout/', user_view.logout, name='logout'),
-    path('students/',include('students.urls')),
+    # path('students/',include('students.urls')),
     path('',include('schools.urls')),
 ]
 

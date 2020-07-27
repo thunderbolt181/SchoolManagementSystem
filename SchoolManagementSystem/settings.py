@@ -46,7 +46,7 @@ ALLOWED_HOSTS = [get_ip(),'127.0.0.1','localhost']
 
 INSTALLED_APPS = [
     'schools.apps.SchoolsConfig',
-    'students.apps.StudentsConfig',
+    # 'students.apps.StudentsConfig',
     'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -97,10 +97,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'smsdb',
-        'HOST': '127.0.0.1',
-        'PORT': '3306',
         'USER': 'root',
         'PASSWORD': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
     }
 }
 

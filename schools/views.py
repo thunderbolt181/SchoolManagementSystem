@@ -10,13 +10,4 @@ import csv
 from django.contrib import auth
 
 def home(request):
-    if request.method == 'POST':
-        username = request.POST.get('email')
-        password = request.POST.get('password')
-        user = auth.authenticate(username=username, password=password)
-        if user is not None:
-            auth.login(request, user)
-            return redirect('home')
-        else:
-            messages.error(request, 'Error wrong username/password')
     return render(request,'schools/home.html')

@@ -33,15 +33,15 @@
                                 <li class="mt-2 nav-item text-primary">
                                     {{user.username}}
                                 </li>
-                                {% if 'students/' in request.path %}
+                                {% if '' in request.path %}
                                     <li class="nav-item">
-                                        <a class="nav-link" data-toggle="modal" data-target="#modalLoginAvatar">Export Data</a>
+                                        <a class="nav-link" data-toggle="modal" data-target="#exportdata">Export Data</a>
                                     </li>                                
                                 {% endif %}
                                     <li class="nav-item">
                                         <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                                     </li>
-                                {% if '/print-id/' in request.path %}
+                                {% if '' in request.path %}
                                     <li class="nav-item">
                                         <a class="p-0 mt-1 m-1" onClick="window.print()"}" >
                                             <i class=" fa text-primary fa-2x fa-print" aria-hidden="true"></i>
@@ -51,16 +51,18 @@
                             </ul>
                         </div>
                     {% else %}
-                        <div class="collapse navbar-collapse" id="navbarCollapse">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item">
-                                    <a class="nav-link p-0 mt-1 m-1" data-toggle="modal" data-target="#modalLoginAvatar">Login</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link p-0 mt-1 m-1" data-toggle="modal" data-target="#modalLoginAvatar">Register</a>
-                                </li>
-                            </ul>
-                        </div>
+                        {% if 'login/' not in request.path %}
+                            <div class="collapse navbar-collapse" id="navbarCollapse">
+                                <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item">
+                                        <a class="nav-link p-0 mt-1 m-1" href="{% url 'login' %}">Login</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link p-0 mt-1 m-1" data-toggle="modal" data-target="#modalLoginAvatar">Register</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </div>
             </nav>
@@ -72,9 +74,9 @@
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="{% static 'students/js/jquery-3.2.1.slim.min.js'%}"></script>
         <script src="{% static 'students/jquery/jquery-3.5.1.js'%}"></script>
-        <script src="{% static 'students/js/bootstrap.min.js'%}"></script>
         <script src="{% static 'students/js/util.js'%}"></script>
         <script src="{% static 'students/js/popper.js'%}"></script>
+        <script src="{% static 'students/js/bootstrap.min.js'%}"></script>
         <script src="{% static 'students/js/main.js'%}"></script>
         <script type="text/javascript" language="javascript">
             var x = document.getElementsByClassName("vDateField");
@@ -108,13 +110,13 @@
         </script>
     </body>
 </html>
-<div class="modal fade" id="modalLoginAvatar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="exportdata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
         <div class="modal-content">
             <div class="modal-body text-center mb-1">
             <h5 class="mt-1 mb-2">The data will be exported in a .csv file</h5>
             <div class="text-center mt-4">
-                <a href="{% url 'create-backup' %}">
+                <a href="#">
                     <button class="btn btn-danger mt-1">Export Data</button>
                 </a>
             </div>
