@@ -1,0 +1,97 @@
+{% extends 'schools/teacher_base.html' %}
+{% load static %}
+{% block main_panel %}
+    <div class="flex justify-start md:pt-2 sm:pt-12">
+        <div class=" block sm:hidden pt-1 items-center ">
+            <button onclick="checkaside()" id="aside-toggle" class="flex items-center px-3 py-2 border rounded text-gray-900 border-gray-600 hover:text-gray-900 hover:border-gray-900 appearance-none focus:outline-none">
+                <i class="fas fa-bars "></i>
+            </button>
+        </div>
+        <h1 class="text-3xl text-black ml-4">Search Results : {{result_no}}</h1>
+    </div> 
+    <div class="w-full mt-6 ">
+        <div class="bg-white z-10 overflow-auto shadow-2xl rounded-lg">
+            <table class="min-w-full leading-normal ">
+                <thead>
+                    <tr>
+                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left  font-semibold text-gray-600 uppercase tracking-wider">
+                            Teacher
+                        </th>
+                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left  font-semibold text-gray-600 uppercase tracking-wider">
+                            Faculty ID
+                        </th>
+                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider">
+                            Post
+                        </th>
+                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left  font-semibold text-gray-600 uppercase tracking-wider">
+                            View Details
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for profile in profiles %}
+                        <tr>
+                            <td class="px-5 py-2 border-b border-gray-200 bg-white ">
+                                <div class="flex items-center">
+                                    <div class="flex-shrink-0 w-10 h-10">
+                                        <img class="w-full h-full rounded-full" src="{{profile.Profile_pic.url}}" />
+                                    </div>
+                                    <div class="ml-3">
+                                        <p class="text-gray-900 whitespace-no-wrap">
+                                            {{profile.user.first_name}} {{profile.user.last_name}}
+                                        </p>
+                                    </div>
+                                </div>
+                            </td>
+                            <td class="px-5 py-2 border-b border-gray-200 bg-white ">
+                                <p class="text-gray-900 whitespace-no-wrap">{{profile.user.teachers.Faculty_ID}}</p>
+                            </td>
+                            <td class="px-5 py-2 border-b border-gray-200 bg-white ">
+                                <p class="text-gray-900 whitespace-no-wrap">
+                                    {{profile.user.teachers.Post}}
+                                </p>
+                            </td>
+                            <td class="px-5 py-2 border-b border-gray-200 bg-white ">
+                                <a href="#">
+                                    <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
+                                        <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
+                                        <span class="relative text-blue-700 flex justify-start items-center">View <i class="ml-2 fas fa-angle-double-right mr-3"></i></span>
+                                    </span>
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% if profiles.has_other_pages %}
+            <ul class="w-full flex p-4 z-11 justify-center bg-white mt-2 rounded-lg">
+                {% if profiles.has_previous %}
+                    <li><a class="text-blue-600" href="?page={{ profiles.previous_page_number }}"><button class='p-2 px-4 mr-2 border border-blue-600 rounded-full'>&laquo;</button></a></li>
+                {% else %}
+                    <li class="text-gray-600"><button class='p-2 px-4 mr-2 border border border-gray-600 rounded-full'><span>&laquo;</span></button></li>
+                {% endif %}
+                {% for i in profiles.paginator.page_range %}
+                    {% if profiles.number > 3 and forloop.first %}
+                        <li><a class="text-blue-600" href="?page=1"><button class='p-2 px-4 mr-2 border border-blue-600 rounded-full'>1</button></a></li>
+                        <li class="text-gray-600"><button class='p-2 px-4 mr-2 border border border-gray-600 rounded-full'><span>...</span></button></li>
+                    {% endif %}
+                    {% if profiles.number == i %}
+                        <li class="text-gray-600"><button class='p-2 px-4 mr-2 border border border-gray-600 rounded-full'><span>{{ i }} </span></button></li>
+                    {% elif i > profiles.number|add:'-3' and i < profiles.number|add:'3' %}
+                        <li><a class="text-blue-600" href="?page={{ i }}"><button class='p-2 px-4 mr-2 border border-blue-600 rounded-full'>{{ i }}</button></a></li>
+                    {% endif %}
+                    {% if profiles.paginator.num_pages > profiles.number|add:'3' and forloop.last %}
+                        <li class="text-gray-600"><button class='p-2 px-4 mr-2 border border border-gray-600 rounded-full'><span>...</span></button></li>
+                        <li><a class="text-blue-600" href="?page={{ profiles.paginator.num_pages }}"><button class='p-2 px-4 mr-2 border border-blue-600 rounded-full'>{{ profiles.paginator.num_pages }}</button></a></li>
+                    {% endif %}
+                {% endfor %}
+                {% if profiles.has_next %}
+                    <li><a class="text-blue-600" href="?page={{ profiles.next_page_number }}"><button class='p-2 px-4 mr-2 border border-blue-600 rounded-full'>&raquo;</button></a></li>
+                {% else %}
+                    <li class="text-gray-600"><button class='p-2 px-4 mr-2 border border-gray-600 rounded-full'><span>&raquo;</span></button></li>
+                {% endif %}
+            </ul>
+        {% endif %}
+    </div>
+{% endblock %}

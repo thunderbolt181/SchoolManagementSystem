@@ -1,0 +1,162 @@
+{% extends 'schools/base.html' %}
+{% load static %}
+{% block content %}
+<div class=" flex ">
+    <aside class="z-10 sm:relative absolute top-0 bg-blue-600 overflow-auto hidden h-screen w-64 sm:block shadow-2xl"  id="aside-content">
+        <div class="  pt-16 sm:pt-24 ">
+            <div class="p-6 md:pt-2 sm:pt-12">
+                <div class="flex justify-between">
+                    <a href="#" class="text-white text-3xl font-semibold uppercase hover:text-gray-300">Admin_stu</a>
+                    <div class="block sm:hidden pt-1 items-center ">
+                        <button onclick="checkaside()" id="aside-toggle1" class="flex items-center px-3 py-2 border rounded text-white border-white hover:text-teal-500 hover:border-teal-500 appearance-none focus:outline-none">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                </div>
+                <a href="{% url 'new-student' %}">
+                    <button class="w-full bg-white cta-btn font-semibold py-2 mt-5 rounded-br-lg rounded-bl-lg rounded-tr-lg shadow-lg hover:shadow-xl hover:bg-gray-300 flex items-center justify-center">
+                        <i class="fas fa-plus mr-3"></i> New Entry
+                    </button>
+                </a>
+            </div>
+            <nav class="text-white text-base font-semibold pt-3 overflow-auto ">
+                <a href="{% url 'dashboard' 'student' %}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item text-sm">
+                    <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item text-sm">
+                    <i class="fas fa-user-tie mr-3"></i>Coordinators
+                </a>
+                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item text-sm">
+                    <i class="fas fa-align-left mr-3"></i>Forms
+                </a>
+                <a class="modal-open flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item text-sm">
+                    <i class="fa fa-search mr-3"></i>Search
+                </a>
+                <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item">
+                    <i class="fas fa-arrow-circle-up mr-3"></i>Upgrade to Pro!
+                </a>
+            </nav>
+        </div>
+    </aside>
+    <div class="relative w-full flex flex-col h-screen overflow-y-hidden pt-16 sm:pt-24">
+        <div class="w-full h-screen overflow-x-hidden border-t flex flex-col">
+            <main class="w-full flex-grow py-6 px-2">
+                <!-- <img src="{% static 'images/Logo.png' %}" alt="Logo" class="fixed ml-64 p-64 pt-20" width="50%" style="z-index: -5;"> -->
+                {% block main_panel %}{% endblock %}
+            </main>
+        </div>
+    </div>
+</div>
+<!-- https://www.youtube.com/watch?v=imZa-fTB5cU -->
+<!-- Modal -->
+<div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-30">
+    <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
+    <div class="modal-container bg-white w-11/12 md:max-w-md mx-auto rounded shadow-lg z-50 overflow-y-auto">
+      <div class="modal-close absolute top-0 right-0 cursor-pointer flex flex-col items-center mt-4 mr-4 text-white text-sm z-50">
+        <svg class="fill-current text-white" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+          <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+        </svg>
+        <span class="text-sm">(Esc)</span>
+      </div>
+      <!-- Add margin if you want to see some of the overlay behind the modal-->
+      <div class="modal-content py-4 text-left px-6">
+        <!--Title-->
+        <div class="flex justify-between items-center pb-3">
+            <div class="flex justify-start items-center">
+                <i class="fa fa-search mr-3"></i>
+                <p class="text-2xl font-bold">Search</p>
+            </div>
+            <div class="modal-close cursor-pointer z-50">
+                <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
+                    <path d="M14.53 4.53l-1.06-1.06L9 7.94 4.53 3.47 3.47 4.53 7.94 9l-4.47 4.47 1.06 1.06L9 10.06l4.47 4.47 1.06-1.06L10.06 9z"></path>
+                </svg>
+            </div>
+        </div>
+        <!--Body-->
+        <p>Enter Students Admission Number or First Name</p>
+        <form class="" action="{% url 'search-student' %}" method="GET">
+            <input class="w-full px-5 py-1 my-4 text-gray-700 bg-gray-200 rounded" type="text" value='{{search}}' placeholder="Search" name='q'>
+            <div class="flex justify-end pt-2">
+                <button class="px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">Search</button>
+                <button type="button" class="modal-close px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400">Close</button>
+              </div>
+        </form>
+        <!--Footer-->
+      </div>
+    </div>
+</div>
+<style>
+    .modal {
+      transition: opacity 0.25s ease;
+    }
+    body.modal-active {
+      overflow-x: hidden;
+      overflow-y: visible !important;
+    }
+    .cta-btn { color: #3d68ff; }
+    .upgrade-btn { background: #1947ee; }
+    .upgrade-btn:hover { background: #0038fd; }
+    .nav-item:hover { background: #1947ee; }
+    .account-link:hover { background: #3d68ff; }
+</style>
+<script>
+    document.getElementById("student-nav").classList.add("text-blue-600")
+    document.getElementById("student-nav").classList.add("border-blue-600")
+</script>
+<script>
+    var asideMenuDiv = document.getElementById("aside-content");
+    var asideMenu0 = document.getElementById("aside-toggle");
+    var asideMenu = document.getElementById("aside-toggle1");
+
+    function checkaside(e) {
+        var target = (e && e.target) || (event && event.srcElement);
+        //Nav Menu
+        if (!checkParent(target, asideMenuDiv)) {
+            // click NOT on the menu
+            if (checkParent(target, asideMenu0)) {
+                asideMenuDiv.classList.toggle('hidden');
+            }
+        }
+        if (checkParent(target, asideMenuDiv)) {
+            // click NOT on the menu
+            if (checkParent(target, asideMenu)) {
+                asideMenuDiv.classList.toggle('hidden');
+            }
+        }
+    }
+</script>
+<script>
+    var openmodal = document.querySelectorAll('.modal-open')
+    for (var i = 0; i < openmodal.length; i++) {
+      openmodal[i].addEventListener('click', function(event){
+    	event.preventDefault()
+    	toggleModal()
+      })
+    }
+    const overlay = document.querySelector('.modal-overlay')
+    overlay.addEventListener('click', toggleModal)
+    var closemodal = document.querySelectorAll('.modal-close')
+    for (var i = 0; i < closemodal.length; i++) {
+      closemodal[i].addEventListener('click', toggleModal)
+    }
+    document.onkeydown = function(evt) {
+      evt = evt || window.event
+      var isEscape = false
+      if ("key" in evt) {
+    	isEscape = (evt.key === "Escape" || evt.key === "Esc")
+      } else {
+    	isEscape = (evt.keyCode === 27)
+      }
+      if (isEscape && document.body.classList.contains('modal-active')) {
+    	toggleModal()
+      }
+    };
+    function toggleModal () {
+      const body = document.querySelector('body')
+      const modal = document.querySelector('.modal')
+      modal.classList.toggle('opacity-0')
+      modal.classList.toggle('pointer-events-none')
+      body.classList.toggle('modal-active')
+    }
+  </script>
+{% endblock %}

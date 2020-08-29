@@ -8,119 +8,168 @@
         <meta name="viewport" content="width=device-width">
         <meta name="keyword" content="School-Management-system">
         <meta name="desctiption" content="school database">
-        <!-- Bootstrap CSS -->
-        <link rel="icon" type="image/png" href="{% static 'students/images/icons/favicon.ico'%}"/>
-        <link rel="stylesheet" type="text/css" href="{% static 'students/css/bootstrap.min.css'%}">
-        <link rel="stylesheet" type="text/css" href="{% static 'students/fonts/font-awesome-4.7.0/css/font-awesome.min.css'%}">
-        <link rel="stylesheet" type="text/css" href="{% static 'students/css/main.css'%}">
-        <link rel="stylesheet" type="text/css" href="{% static 'students/css/util.css'%}">
-        <link rel="stylesheet" type="text/css" href="{% static 'students/css/home.css'%}">
+        <!--  CSS -->
+        <link rel="icon" type="image/png" href="{% static 'images/Logo.png'%}"/>
+        <link rel="stylesheet" href="{% static 'tailwindcss/tailwind.min.css' %}">
+        <link rel="stylesheet" href="{% static 'tailwindcss/font_montserrat.css' %}" >
+        <!-- Script -->
+        <script src="{% static 'tailwindcss/Chart.bundle.min.js' %}"></script>
+        <script src="{% static 'fonts_icons/js/all.js' %}"></script>
+
         <title>Students</title>
     </head>
-    <body style="background-color: rgb(0, 0, 0);">
-        <header>
-            <nav class="navbar navbar-expand-md navbar-dark fixed-top " style="background-color: rgb(0, 0, 0);" >
-                <div class="container">
-                    <div class='navbar-brand'>
-                        <a style="font-size: 19px;" class="navbar-brand font-weight-bolder w-75" href="{% url 'home' %}">School Management System</a>
-                    </div>
-                    <button class="navbar-toggler m-0" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    {% if user.is_authenticated %}
-                        <div class="collapse navbar-collapse" id="navbarCollapse">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="mt-2 nav-item text-primary">
-                                    {{user.username}}
-                                </li>
-                                {% if '' in request.path %}
-                                    <li class="nav-item">
-                                        <a class="nav-link" data-toggle="modal" data-target="#exportdata">Export Data</a>
-                                    </li>                                
-                                {% endif %}
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{% url 'logout' %}">Logout</a>
-                                    </li>
-                                {% if '' in request.path %}
-                                    <li class="nav-item">
-                                        <a class="p-0 mt-1 m-1" onClick="window.print()"}" >
-                                            <i class=" fa text-primary fa-2x fa-print" aria-hidden="true"></i>
-                                        </a>
-                                    </li>
-                                {% endif %}
-                            </ul>
+    <body class="bg-gray-500 text-sm font-medium" style="font-family: 'Montserrat', sans-serif; font-size: 13px;">
+        <nav id="header" class="bg-gray-900 fixed w-full z-20 top-0 shadow ">
+            <div class="w-full container mx-auto flex flex-wrap items-center mt-0 pt-3 pb-3 md:pb-0">
+                <div class="w-3/4 pl-2 md:pl-0 mb-2">
+                    <a class="text-white text-base xl:text-xl no-underline hover:no-underline font-bold flex items-center float-left" href="#">
+                        <img src="{% static 'images/Logo.png' %}" class="mr-2" width="35" height="35" alt="Logo">
+                        School Management System
+                    </a>
+                </div>
+                <div class="w-1/4 pr-0 mb-2">
+                    <div class="flex relative inline-block float-right">
+                        {% if 'login' in request.path %}
+                        <div class="relative text-sm float-right items-center">
+                            <button id="userButton" class="focus:outline-none mr-3 ">
+                                <a href="#" class="rounded px-4 py-2 block text-gray-200 hover:text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Register</a></li>
+                            </button>
                         </div>
-                    {% else %}
-                        {% if 'login/' not in request.path %}
-                            <div class="collapse navbar-collapse" id="navbarCollapse">
-                                <ul class="navbar-nav ml-auto">
-                                    <li class="nav-item">
-                                        <a class="nav-link p-0 mt-1 m-1" href="{% url 'login' %}">Login</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link p-0 mt-1 m-1" data-toggle="modal" data-target="#modalLoginAvatar">Register</a>
-                                    </li>
-                                </ul>
+                        {% else %}
+                            <div class="relative text-sm float-right items-center">
+                                <button id="userButton" class="focus:outline-none mr-3 ">
+                                    <img class="w-8 h-8 rounded-full mr-2 hover:shadow-outline " src="{{request.user.profile.Profile_pic.url}}" alt="Avatar of User">
+                                </button>
+                                <div id="userMenu" class="bg-white rounded shadow-md mt-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible">
+                                    {% if user.is_authenticated %}
+                                        <ul class="list-reset w-40">
+                                            <li class="px-4 py-2 block text-gray-900 ">{{user.username}}</li>
+                                            <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">My account</a></li>
+                                            <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Notifications</a></li>
+                                            <li>
+                                                <hr class="border-t mx-2 border-gray-400">
+                                            </li>
+                                            <li><a href="{% url 'logout' %}" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Logout</a></li>
+                                        </ul>
+                                    {% else %}
+                                        <ul class="list-reset w-32">
+                                            <li><a href="{% url 'login' %}" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Login</a></li>
+                                            <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Contact Us</a></li>
+                                        </ul>
+                                    {% endif %}
+                                </div>
                             </div>
                         {% endif %}
-                    {% endif %}
+                        {% if user.is_authenticated %}
+                            <div class="block sm:hidden pr-4">
+                                <button id="nav-toggle" class="flex items-center px-3 py-2 border rounded text-gray-500 border-gray-600 hover:text-teal-500 hover:border-teal-500 appearance-none focus:outline-none">
+                                    <svg class="fill-current h-3 w-3" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                        <title>Menu</title>
+                                        <path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z" />
+                                    </svg>
+                                </button>
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
-            </nav>
-        </header>
-        <div  >
+                {% if user.is_authenticated %}
+                    <div class="w-full flex-grow sm:flex sm:items-center sm:w-auto hidden sm:block sm:mt-0 bg-gray-900 z-20 " id="nav-content">
+                        <ul class="list-reset sm:flex flex-1 items-center px-4 md:px-0">
+                            <li class="mr-6 my-2 md:my-0" >
+                                <a href="{% url 'home' %}" id="dashboard-nav" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-orange-600 hover:bg-gray-800 px-2 border-b-2 border-gray-900 hover:border-orange-600">
+                                    <i  class="fas fa-tachometer-alt fa-fw mr-3" aria-hidden="true" ></i><span class="pb-1 md:pb-0 text-sm">Dashboard</span>
+                                </a>
+                            </li>
+                            <li class="mr-6 my-2 md:my-0">
+                                <a href="{% url 'dashboard' 'student' %}" id="student-nav" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-blue-500 hover:bg-gray-800 px-2 border-b-2 border-gray-900 hover:border-blue-500">
+                                    <i class="fas fa-child fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Students</span>
+                                </a>
+                            </li>
+                            <li class="mr-6 my-2 md:my-0">
+                                <a href="{% url 'dashboard' 'teacher' %}" id="teacher-nav" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-purple-500 hover:bg-gray-800 px-2 border-b-2 border-gray-900 hover:border-purple-500">
+                                    <i class="fa fa-chalkboard-teacher fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Teachers</span>
+                                </a>
+                            </li>
+                            <li class="mr-6 my-2 md:my-0">
+                                <a href="{% url 'dashboard' 'staff' %}" id="staff-nav" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-500 hover:bg-gray-800 px-2 border-b-2 border-gray-900 hover:border-green-500">
+                                    <i class="fa fa-users fa-fw mr-3" aria-hidden="true"></i><span class="pb-1 md:pb-0 text-sm">Staff</span>
+                                </a>
+                            </li>
+                            <li class="mr-6 my-2 md:my-0">
+                                <a href="#" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-pink-400 hover:bg-gray-800 px-2 border-b-2 border-gray-900 hover:border-pink-400">
+                                    <i class="fa fa-calendar fa-fw mr-3" aria-hidden="true"></i><span class="pb-1 md:pb-0 text-sm">Calendar</span>
+                                </a>
+                            </li>
+                        </ul>
+                        <!-- <div class="relative pull-right pl-4 pr-4 md:pr-0">
+                            <input type="search" placeholder="Search" class="w-full bg-gray-100 text-sm text-gray-800 transition border focus:outline-none focus:border-gray-700 rounded py-1 px-2 pl-10 appearance-none leading-normal">
+                            <div class="absolute search-icon" style="top: 0.375rem;left: 1.75rem;">
+                                <svg class="fill-current pointer-events-none text-gray-800 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                    <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
+                                </svg>
+                            </div>
+                        </div> -->
+                    </div>
+                {% endif %}
+            </div>
+        </nav>
+
+        <div>
             {% block content %}{% endblock %}
         </div>
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script src="{% static 'students/js/jquery-3.2.1.slim.min.js'%}"></script>
-        <script src="{% static 'students/jquery/jquery-3.5.1.js'%}"></script>
-        <script src="{% static 'students/js/util.js'%}"></script>
-        <script src="{% static 'students/js/popper.js'%}"></script>
-        <script src="{% static 'students/js/bootstrap.min.js'%}"></script>
-        <script src="{% static 'students/js/main.js'%}"></script>
-        <script type="text/javascript" language="javascript">
-            var x = document.getElementsByClassName("vDateField");
-            var y = document.getElementsByClassName("vTimeField");
-            for(i=0;i<x.length;i++){
-                x[i].type='date';
-                y[i].type='time';
-            }
-        </script>
+
         <script>
-            function openCity(evt, cityName) {
-                // Declare all variables
-                var i, tabcontent, tablinks;
-
-                // Get all elements with class="tabcontent" and hide them
-                tabcontent = document.getElementsByClassName("tabcontent");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
+            /*Toggle dropdown list*/
+            /*https://gist.github.com/slavapas/593e8e50cf4cc16ac972afcbad4f70c8*/
+        
+            var userMenuDiv = document.getElementById("userMenu");
+            var userMenu = document.getElementById("userButton");
+        
+            var navMenuDiv = document.getElementById("nav-content");
+            var navMenu = document.getElementById("nav-toggle");
+        
+            document.onclick = check;
+        
+            function check(e) {
+                var target = (e && e.target) || (event && event.srcElement);
+        
+                //User Menu
+                if (!checkParent(target, userMenuDiv)) {
+                    // click NOT on the menu
+                    if (checkParent(target, userMenu)) {
+                        // click on the link
+                        if (userMenuDiv.classList.contains("invisible")) {
+                            userMenuDiv.classList.remove("invisible");
+                        } else { userMenuDiv.classList.add("invisible"); }
+                    } else {
+                        // click both outside link and outside menu, hide menu
+                        userMenuDiv.classList.add("invisible");
+                    }
                 }
-
-                // Get all elements with class="tablinks" and remove the class "active"
-                tablinks = document.getElementsByClassName("tablinks");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace(" active", "");
+                
+                //Nav Menu
+                if (!checkParent(target, navMenuDiv)) {
+                    // click NOT on the menu
+                    if (checkParent(target, navMenu)) {
+                        // click on the link
+                        if (navMenuDiv.classList.contains("hidden")) {
+                            navMenuDiv.classList.remove("hidden");
+                        } else { navMenuDiv.classList.add("hidden"); }
+                    } else {
+                        // click both outside link and outside menu, hide menu
+                        navMenuDiv.classList.add("hidden");
+                    }
                 }
-
-                // Show the current tab, and add an "active" class to the button that opened the tab
-                document.getElementById(cityName).style.display = "block";
-                evt.currentTarget.className += " active";
+        
+            }
+        
+            function checkParent(t, elm) {
+                while (t.parentNode) {
+                    if (t == elm) { return true; }
+                    t = t.parentNode;
+                }
+                return false;
             }
         </script>
     </body>
 </html>
-<div class="modal fade" id="exportdata" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog cascading-modal modal-avatar modal-sm" role="document">
-        <div class="modal-content">
-            <div class="modal-body text-center mb-1">
-            <h5 class="mt-1 mb-2">The data will be exported in a .csv file</h5>
-            <div class="text-center mt-4">
-                <a href="#">
-                    <button class="btn btn-danger mt-1">Export Data</button>
-                </a>
-            </div>
-            </div>
-        </div>
-    </div>
-</div>

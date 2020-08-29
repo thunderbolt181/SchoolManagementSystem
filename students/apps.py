@@ -1,7 +1,7 @@
-# from django.apps import AppConfig
+from django.apps import AppConfig
 
 
-# class StudentsConfig(AppConfig):
-#     name = 'students'
-#     def ready(self):
-#         import students.signals
+class StudentsConfig(AppConfig):
+    name = 'students'
+    def ready(self):
+        import students.signals

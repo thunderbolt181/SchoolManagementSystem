@@ -1,2 +1,4 @@
 media/student/
 static/downloads/
+.vscode
+django-sms

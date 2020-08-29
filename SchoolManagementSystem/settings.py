@@ -45,8 +45,10 @@ ALLOWED_HOSTS = [get_ip(),'127.0.0.1','localhost']
 # Application definition
 
 INSTALLED_APPS = [
+    'attendance.apps.AttendanceConfig',
+    'teachers.apps.TeachersConfig',
     'schools.apps.SchoolsConfig',
-    # 'students.apps.StudentsConfig',
+    'students.apps.StudentsConfig',
     'users.apps.UsersConfig',
     'django.contrib.admin',
     'django.contrib.auth',
@@ -95,12 +97,12 @@ WSGI_APPLICATION = 'SchoolManagementSystem.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'smsdb',
-        'USER': 'root',
-        'PASSWORD': '',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'SmsDB',
+        'USER': 'postgres',
+        'PASSWORD': 'Apocal321',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '5432',
     }
 }
 
@@ -129,13 +131,13 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/kolkata'
 
 USE_I18N = True
 
 USE_L10N = True
 
-USE_TZ = True
+USE_TZ = False
 
 
 # Static files (CSS, JavaScript, Images)
@@ -148,7 +150,7 @@ TEMPLATE_DIRS = (
     os.path.join(BASE_DIR, 'templates'),
 )
 STATICFILES_DIRS = (
-     os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'static'),
 )
 STATIC_ROOT = os.path.join(os.path.dirname(BASE_DIR), 'static')
 

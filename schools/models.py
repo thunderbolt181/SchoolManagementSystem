@@ -1,9 +1,11 @@
 from django.db import models
 from PIL import Image
 import os
+from django.contrib.auth.models import User
+
 
 def path_and_rename(instance, filename):
-    upload_to = f'{instance.id}_{instance.Name}/'
+    upload_to = f'{instance.id}/'
     return os.path.join(upload_to, filename)
 
 class institutes(models.Model):
@@ -27,3 +29,20 @@ class institutes(models.Model):
 
     def __str__(self):
         return self.Name
+
+POST=(
+    ('director','Director'),
+    ('principal','Principal'),
+    ('vice principal','Vice Principal'),
+    ('accountant','Accountant'),
+    ('receptionist','Receptionist'),
+    ('editor','Admin Editor(Have all kind of Permissions)'),
+)
+
+class staff(models.Model):
+    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    Staff_ID = models.IntegerField(blank=False)
+    Post = models.CharField(choices=POST,blank=False,max_length=20)
+
+    def __str__(self):
+        return f"{self.Staff_ID}_{self.user.first_name} {self.user.last_name}"
