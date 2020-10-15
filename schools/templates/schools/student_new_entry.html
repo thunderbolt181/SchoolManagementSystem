@@ -36,7 +36,7 @@
                                     <div class="bg-red-400">{{ field.errors }}</div>
                                     <div class="bg-yellow-200 border-l-4 mt-2 border-yellow-500 pl-5 text-xs ">{{ field.help_text }}</div>
                                 </div>
-                            {% elif field.name == 'Special_rank' %}
+                            {% elif field.name == 'Class' %}
                                 <label class="block text-sm flex justify-start items-center" for="{{ field.name }}">
                                     {{ field.label_tag }}
                                 </label>
@@ -68,8 +68,10 @@
                                 </select>
                                 <div class="bg-red-400">{{ field.errors }}</div>
                             {% elif field.name == 'Profile_pic' %}
-                                <label class="block text-sm flex justify-start items-center" for="{{ field.name }}">{{ field.label_tag }}</label>
-                                <input class="px-5 py-1 text-gray-700" id="{{ field.id_for_label }}" name="{{ field.name }}" type="{{ field.field.widget.input_type }}" required>
+                                <label class="block text-sm  flex justify-start items-center" for="{{ field.name }}">
+                                    {{ field.label_tag }}
+                                </label>
+                                {{field}}
                                 <div class="bg-red-400">{{ field.errors }}</div>
                             {% else %}
                                 <div class="">

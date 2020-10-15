@@ -1,8 +1,14 @@
-from django.utils.text import slugify
-from django.dispatch import receiver
-from django.db import models
-from .models import student
-import os
+# from django.utils.text import slugify
+# from django.dispatch import receiver
+# from django.db.models.signals import post_delete
+# from django.db import models
+# from .models import student
+# from users.models import profile
+# import os
+
+# @receiver(post_delete, sender=student)
+# def auto_delete_user_with_profile(sender, instance, **kwargs):
+#     instance.profile_user.delete()
 
 # @receiver(models.signals.pre_save, sender=student)
 # def auto_delete_file_on_change(sender, instance, **kwargs):

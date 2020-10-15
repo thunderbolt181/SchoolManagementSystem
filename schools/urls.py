@@ -9,13 +9,9 @@ urlpatterns = [
     path('new-staff/',views.Createstaff,name="new-staff"),
     path('new-teacher/',views.Createteacher,name="new-teacher"),
     # Edit Detail
-    path('edit-student/<id>',views.EditStudent,name="edit-student"),
-    path('edit-staff/<id>',views.Editstaff,name="edit-staff"),
-    path('edit-teacher/<id>',views.Editteacher,name="edit-teacher"),
+    path('edit/<status>/<id>',views.EditStudent,name="edit"),
     # Search
-    path('search-student/',views.search_student,name='search-student'),
-    path('search-staff/',views.search_staff,name='search-staff'),
-    path('search-teacher/',views.search_teacher,name='search-teacher'),
+    path('search/<status>/',views.search,name='search'),
     # Profile View
-    path('profile/<staff>/<id>',views.ProfileView,name='profile-student'),
+    path('profile/<staff>/<id>/',views.ProfileView,name='profile'),
 ]

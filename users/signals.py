@@ -7,19 +7,6 @@ from django.db import models
 import os
 import shutil
 
-# @receiver(post_save, sender=User)
-# def create_profile(sender, instance, created, **kwargs):
-#     if created:
-#         profile.objects.create(user=instance)
-
-# @receiver(post_save, sender=User)
-# def save_profile(sender, instance, **kwargs):
-#     instance.profile.save()
-
-@receiver(post_delete, sender=profile)
-def auto_delete_user_with_profile(sender, instance, **kwargs):
-    instance.user.delete()
-
 @receiver(pre_delete, sender=profile)
 def auto_delete_profile_pic_with_profile(sender, instance, **kwargs):
     path = os.path.split(instance.Profile_pic.path)[0]

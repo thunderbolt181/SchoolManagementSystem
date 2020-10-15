@@ -24,7 +24,7 @@ class UserEditForm(forms.ModelForm):
 class ProfileCreateForm(forms.ModelForm):
     class Meta:
         model = profile
-        exclude = ['user','status','institute']
+        exclude = ['user','status']
         widgets = {
             'DOB': forms.TextInput(attrs={'type':'date'}),
         }

@@ -1,4 +1,4 @@
-{% extends 'schools/student_base.html' %}
+{% extends extend_tag %}
 {% load static %}
 {% block main_panel %}
 <div class="flex justify-start md:pt-2 sm:pt-12">
@@ -100,7 +100,7 @@
 	var dict = {{profile_att|safe}};
 	var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];
 	var month_days = [];
-	var i=3; // change this to cahnge sequence of months
+	var i=3; // change this to change sequence of months
 	var j=0;
 	while(i<15){ // change this to change sequence of months
 		j = i%12;

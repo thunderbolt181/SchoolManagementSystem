@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth.models import User
-from schools.models import institutes
 from django.utils import timezone
 import shutil
 from PIL import Image
@@ -40,11 +39,11 @@ STATUS=(
 )
 
 def path_and_rename(instance, filename):
-    upload_to = f"{instance.institute.id}/{instance.status}/{instance.id}"
+    upload_to = f"{instance.status}/{instance.user.username}"
     return os.path.join(upload_to, filename)
 
 class profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
     status = models.CharField(choices=STATUS,default="",blank=False,max_length=10)
     DOB = models.DateField(blank=False,default=timezone.now)
     Gender = models.CharField(max_length=10,choices=GENDER,blank=False,default="")
@@ -60,7 +59,6 @@ class profile(models.Model):
     city = models.CharField(blank=False,max_length=100,default='')
     PIN_Code = models.CharField(blank=False,max_length=10,default='')
     Category = models.CharField(max_length=20,choices=CATEGORY,blank=False,default="")
-    institute = models.ForeignKey(institutes,on_delete=models.CASCADE,blank=True,default=1)
     Profile_pic = models.ImageField(default='default.jpg',blank=False,upload_to=path_and_rename)
 
     def save(self, *args, **kwargs):

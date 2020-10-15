@@ -5,4 +5,4 @@ from django.contrib.auth.models import User
 class StaffCreateForm(forms.ModelForm):
     class Meta:
         model = staff
-        exclude = ['user']
+        exclude = ['user','profile_user','institute']

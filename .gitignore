@@ -1,4 +1,3 @@
-media/student/
-static/downloads/
+media/
 .vscode
 django-sms

@@ -34,7 +34,7 @@
                             <td class="px-5 py-2 border-b border-gray-200 bg-white ">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 w-10 h-10">
-                                        <img class="w-full h-full rounded-full" src="{{profile.Profile_pic.url}}" />
+                                        <img class="w-full h-full rounded-full" src="{{profile.profile_user.Profile_pic.url}}" />
                                     </div>
                                     <div class="ml-3">
                                         <p class="text-gray-900 whitespace-no-wrap">
@@ -44,15 +44,15 @@
                                 </div>
                             </td>
                             <td class="px-5 py-2 border-b border-gray-200 bg-white ">
-                                <p class="text-gray-900 whitespace-no-wrap">{{profile.user.student.Admission_no}}</p>
+                                <p class="text-gray-900 whitespace-no-wrap">{{profile.Admission_no}}</p>
                             </td>
                             <td class="px-5 py-2 border-b border-gray-200 bg-white">
                                 <p class="text-gray-900 whitespace-no-wrap">
-                                    {{profile.user.student.Class}}-{{profile.user.student.Section}}
+                                    {{profile.Class}}-{{profile.Section}}
                                 </p>
                             </td>
                             <td class="px-5 py-2 border-b border-gray-200 bg-white ">
-                                <a href="{% url 'profile-student' 'student' profile.id %}">
+                                <a href="{% url 'profile' 'student' profile.id %}">
                                     <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
                                         <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
                                         <span class="relative text-blue-700 flex justify-start items-center">View <i class="ml-2 fas fa-angle-double-right mr-3"></i></span>

@@ -5,4 +5,4 @@ from django.contrib.auth.models import User
 class TeacherCreateForm(forms.ModelForm):
     class Meta:
         model = teachers
-        exclude = ['user']
+        exclude = ['user','institute','profile_user']

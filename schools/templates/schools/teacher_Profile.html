@@ -7,22 +7,22 @@
                 <i class="fas fa-bars "></i>
             </button>
         </div>
-        <h1 class="text-3xl text-black ml-4">Teacher's Profile</h1>
+        <h1 class="text-3xl text-black ml-4">{{profile.user.first_name}}'s Profile</h1>
     </div> 
     <div class="w-full mt-2 overflow-auto">
         <div class="lg:grid lg:grid-cols-3 flex-col lg:gap-4 lg:p-4">
             <div class="col-span-1 p-8 bg-white rounded-lg shadow-2xl justify-center">
                 <div class="m-auto p-2 rounded-lg lg:w-auto w-64 h-auto" >
-                    <img src="{{profile.Profile_pic.url}}" alt="Profile_pic" class="rounded-lg" style="max-height: 250px;margin: auto;">
+                    <img src="{{profile.profile_user.Profile_pic.url}}" alt="Profile_pic" class="rounded-lg" style="max-height: 250px;margin: auto;">
                 </div>
                 <div class="justify-center text-center">
                     <span class="m-auto text-gray-800 text-3xl">{{profile.user.first_name}} {{profile.user.last_name}}</span>
                 </div>
                 <div class="justify-center text-center">
-                    <span class="m-auto text-gray-800 text-lg text-blue-700">Faculty ID: {{profile.user.teachers.Faculty_ID}}</span>
+                    <span class="m-auto text-gray-800 text-lg text-blue-700">Faculty ID: {{profile.Faculty_ID}}</span>
                 </div>
             </div>
-            <div class="col-span-2 row-span-2 bg-white rounded-lg lg:mt-0 mt-2 shadow-2xl p-2 overflow-auto">
+            <div class="col-span-2 row-span-2 bg-white rounded-lg lg:mt-0 mt-2 shadow-2xl p-2">
                 <table class="min-w-full leading-normal min-h-full">
                     <tr class="mt-2">
                         <td class="px-5 py-2 border-b border-gray-200 bg-white" style="font-size: 900;">
@@ -40,7 +40,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.DOB}}
+                                {{profile.profile_user.DOB}}
                             </p>
                         </td>
                     </tr>
@@ -50,7 +50,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.Gender}}
+                                {{profile.profile_user.Gender}}
                             </p>
                         </td>
                     </tr>
@@ -70,7 +70,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.user.teachers.Post}}
+                                {{profile.Post}}
                             </p>
                         </td>
                     </tr>
@@ -80,7 +80,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.phone_1}}
+                                {{profile.profile_user.phone_1}}
                             </p>
                         </td>
                     </tr>
@@ -90,7 +90,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.phone_2}}
+                                {{profile.profile_user.phone_2}}
                             </p>
                         </td>
                     </tr>
@@ -100,7 +100,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.Aadhar_Number}}
+                                {{profile.profile_user.Aadhar_Number}}
                             </p>
                         </td>
                     </tr>
@@ -110,7 +110,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.Category}}
+                                {{profile.profile_user.Category}}
                             </p>
                         </td>
                     </tr>
@@ -120,7 +120,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.Fathers_Name}}
+                                {{profile.profile_user.Fathers_Name}}
                             </p>
                         </td>
                     </tr>
@@ -130,7 +130,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.Fathers_Occupation}}
+                                {{profile.profile_user.Fathers_Occupation}}
                             </p>
                         </td>
                     </tr>
@@ -140,7 +140,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.Mothers_Name}}
+                                {{profile.profile_user.Mothers_Name}}
                             </p>
                         </td>
                     </tr>
@@ -150,7 +150,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.Mothers_Occupation}}
+                                {{profile.profile_user.Mothers_Occupation}}
                             </p>
                         </td>
                     </tr>
@@ -163,7 +163,7 @@
                             <p class="text-black font-bold whitespace-no-wrap ">Edit Details</p>
                         </td>
                         <td class="px-5 py-4 border-b border-gray-200 bg-white">
-                            <a href="{% url 'edit-teacher' profile.id %}">
+                            <a href="{% url 'edit' 'teacher' profile.id %}">
                                 <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
                                     <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
                                     <span class="relative text-blue-700 flex justify-start items-center">Edit <i class="ml-2 fas fa-angle-double-right mr-3"></i></span>
@@ -189,7 +189,7 @@
                             <p class="text-black font-bold whitespace-no-wrap ">Attendance</p>
                         </td>
                         <td class="px-5 py-4 border-b border-gray-200 bg-white">
-                            <a href="{% url 'yearly-attendance' 'teacher' profile.id %}">
+                            <a href="{% url 'yearly-attendance' 'teacher' profile.profile_user.id %}">
                                 <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
                                     <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
                                     <span class="relative text-blue-700 flex justify-start items-center">View <i class="ml-2 fas fa-angle-double-right mr-3"></i></span>
@@ -248,11 +248,11 @@
                         <td class="px-5 py-4 border-b border-gray-200 bg-white" style="font-size: 900;">
                             <p class="text-black font-bold whitespace-no-wrap ">Classteacher</p>
                         </td>
-                        {% if profile.user.teachers.is_classteacher %}
+                        {% if profile.is_classteacher %}
                             <td class="px-5 py-4 border-b border-gray-200 bg-white">
                                 <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
                                     <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
-                                    <span class="relative text-blue-700 flex justify-start items-center">{{profile.user.teachers.Class}}-{{profile.user.teachers.Section}}</i></span>
+                                    <span class="relative text-blue-700 flex justify-start items-center">{{profile.Class}}-{{profile.Section}}</i></span>
                                 </span>
                             </td>
                         {% else %}
@@ -268,11 +268,11 @@
                         <td class="px-5 py-4 border-b border-gray-200 bg-white" style="font-size: 900;">
                             <p class="text-black font-bold whitespace-no-wrap ">Coordinator</p>
                         </td>
-                        {% if profile.user.teachers.is_cordinators %}
+                        {% if profile.is_cordinator %}
                             <td class="px-5 py-4 border-b border-gray-200 bg-white">
                                 <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
                                     <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
-                                    <span class="relative text-blue-700 flex justify-start items-center">{{profile.user.teachers.Cordinator}}</span>
+                                    <span class="relative text-blue-700 flex justify-start items-center">{{profile.Cordinator}}</span>
                                 </span>
                             </td>
                         {% else %}

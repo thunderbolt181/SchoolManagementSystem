@@ -10,26 +10,27 @@
         <meta name="desctiption" content="school database">
         <!--  CSS -->
         <link rel="icon" type="image/png" href="{% static 'images/Logo.png'%}"/>
-        <link rel="stylesheet" href="{% static 'tailwindcss/tailwind.min.css' %}">
-        <link rel="stylesheet" href="{% static 'tailwindcss/font_montserrat.css' %}" >
+        <link rel="stylesheet"  type="text/css"  href="{% static 'tailwindcss/tailwind.min.css' %}">
+        <link rel="stylesheet"  type="text/css"  href="{% static 'tailwindcss/font_montserrat.css' %}" >
+        <!-- <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"> -->
         <!-- Script -->
         <script src="{% static 'tailwindcss/Chart.bundle.min.js' %}"></script>
         <script src="{% static 'fonts_icons/js/all.js' %}"></script>
 
         <title>Students</title>
     </head>
-    <body class="bg-gray-500 text-sm font-medium" style="font-family: 'Montserrat', sans-serif; font-size: 13px;">
+    <body class="bg-gray-300 text-sm font-medium" style="font-family: 'Montserrat', sans-serif; font-size: 11px;">
         <nav id="header" class="bg-gray-900 fixed w-full z-20 top-0 shadow ">
             <div class="w-full container mx-auto flex flex-wrap items-center mt-0 pt-3 pb-3 md:pb-0">
                 <div class="w-3/4 pl-2 md:pl-0 mb-2">
                     <a class="text-white text-base xl:text-xl no-underline hover:no-underline font-bold flex items-center float-left" href="#">
-                        <img src="{% static 'images/Logo.png' %}" class="mr-2" width="35" height="35" alt="Logo">
+                        <img src="{% static 'images/Logo.png' %}" class="mr-2" width="30" height="30" alt="Logo">
                         School Management System
                     </a>
                 </div>
                 <div class="w-1/4 pr-0 mb-2">
                     <div class="flex relative inline-block float-right">
-                        {% if 'login' in request.path %}
+                        {% if 'login' in request.path or 'password-reset' in request.path %}
                         <div class="relative text-sm float-right items-center">
                             <button id="userButton" class="focus:outline-none mr-3 ">
                                 <a href="#" class="rounded px-4 py-2 block text-gray-200 hover:text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Register</a></li>
@@ -42,14 +43,24 @@
                                 </button>
                                 <div id="userMenu" class="bg-white rounded shadow-md mt-2 absolute mt-12 top-0 right-0 min-w-full overflow-auto z-30 invisible">
                                     {% if user.is_authenticated %}
-                                        <ul class="list-reset w-40">
-                                            <li class="px-4 py-2 block text-gray-900 ">{{user.username}}</li>
-                                            <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">My account</a></li>
-                                            <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Notifications</a></li>
+                                        <ul class="list-reset overflow-x-hidden" style="min-width: max-content;">
+                                            <li class="px-4 py-2 block">
+                                                <div class="flex justify-between">
+                                                    <div class="">
+                                                        <img class="w-12 h-12 rounded-full mr-2 mt-1" src="{{request.user.profile.Profile_pic.url}}" alt="Avatar of User">
+                                                    </div>
+                                                    <div class="w-auto">
+                                                        <p class="text-xl text-blue-500">{{user.username}}</p>
+                                                        <p class="text-gray-900" style="font-size: smaller;">{{user.email}}</p>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                            <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline"><i  class="fa fa-user-circle fa-fw mr-3" aria-hidden="true" ></i>My account</a></li>
+                                            <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline"><i  class="fa fa-bell fa-fw mr-3" aria-hidden="true" ></i>Notifications</a></li>
                                             <li>
                                                 <hr class="border-t mx-2 border-gray-400">
                                             </li>
-                                            <li><a href="{% url 'logout' %}" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline">Logout</a></li>
+                                            <li><a href="{% url 'logout' %}" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline"><i class="fas fa-sign-out-alt fa-fw mr-3" aria-hidden="true" ></i>Logout</a></li>
                                         </ul>
                                     {% else %}
                                         <ul class="list-reset w-32">
@@ -73,7 +84,7 @@
                     </div>
                 </div>
                 {% if user.is_authenticated %}
-                    <div class="w-full flex-grow sm:flex sm:items-center sm:w-auto hidden sm:block sm:mt-0 bg-gray-900 z-20 " id="nav-content">
+                    <div class="w-full flex-grow sm:flex sm:items-center sm:w-auto hidden sm:block sm:mt-0 bg-gray-900 z-10 " id="nav-content">
                         <ul class="list-reset sm:flex flex-1 items-center px-4 md:px-0">
                             <li class="mr-6 my-2 md:my-0" >
                                 <a href="{% url 'home' %}" id="dashboard-nav" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-orange-600 hover:bg-gray-800 px-2 border-b-2 border-gray-900 hover:border-orange-600">
@@ -101,14 +112,6 @@
                                 </a>
                             </li>
                         </ul>
-                        <!-- <div class="relative pull-right pl-4 pr-4 md:pr-0">
-                            <input type="search" placeholder="Search" class="w-full bg-gray-100 text-sm text-gray-800 transition border focus:outline-none focus:border-gray-700 rounded py-1 px-2 pl-10 appearance-none leading-normal">
-                            <div class="absolute search-icon" style="top: 0.375rem;left: 1.75rem;">
-                                <svg class="fill-current pointer-events-none text-gray-800 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
-                                </svg>
-                            </div>
-                        </div> -->
                     </div>
                 {% endif %}
             </div>
@@ -162,7 +165,6 @@
                 }
         
             }
-        
             function checkParent(t, elm) {
                 while (t.parentNode) {
                     if (t == elm) { return true; }

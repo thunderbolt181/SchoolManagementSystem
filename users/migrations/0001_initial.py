@@ -37,7 +37,6 @@ class Migration(migrations.Migration):
                 ('PIN_Code', models.CharField(default='', max_length=10)),
                 ('Category', models.CharField(choices=[('', '------'), ('General', 'General'), ('OBC', 'OBC'), ('SC', 'SC'), ('ST', 'ST')], default='', max_length=20)),
                 ('Profile_pic', models.ImageField(default='default.jpg', upload_to=users.models.path_and_rename)),
-                ('institute', models.ForeignKey(blank=True, default=1, on_delete=django.db.models.deletion.CASCADE, to='schools.institutes')),
                 ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
             ],
         ),

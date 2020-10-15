@@ -1,0 +1,196 @@
+{% extends extend_tag %}
+{% load static %}
+{% block main_panel %}
+<div class="flex justify-start md:pt-2 sm:pt-12">
+  <div class=" block sm:hidden pt-1 items-center ">
+      <button onclick="checkaside()" id="aside-toggle" class="flex items-center px-3 py-2 border rounded text-gray-900 border-gray-600 hover:text-gray-900 hover:border-gray-900 appearance-none focus:outline-none">
+          <i class="fas fa-bars "></i>
+      </button>
+  </div>
+  <h1 class="text-3xl text-black ml-4">Yearly Attendance</h1>
+</div>
+<div class="lg:grid lg:grid-cols-3">
+	<div class="col-span-1 p-2">
+		<!--Graph Card-->
+		<div class="bg-white border rounded shadow">
+			<div class="border-b p-2">
+				<h5 class="font-bold uppercase text-gray-600">Yearly Attendance Graph</h5>
+			</div>
+			<div class="p-5">
+				<canvas id="chartjs-4" class="chartjs" width="undefined" height="undefined"></canvas>
+			</div>
+		</div>
+		<div class="bg-white border rounded shadow p-1">
+			<table class="bg-white min-w-full">
+				<tr>
+					<th class="bg-blue-100 border text-center px-1 py-2">Percentage(%)</th>
+					<th class="bg-blue-100 border text-center px-1 py-2" id="Percentage"></th>
+				</tr>
+				<tr>
+					<th class="bg-blue-100 border text-center px-1 py-2">Total Days</th>
+					<th class="bg-blue-100 border text-center px-1 py-2" id="total_days">126</th>
+				</tr>
+			</table>
+		</div>
+		<!--/Graph Card-->
+	</div>
+	<div class=" col-span-2 row-span-2 p-2">
+		<!--Graph Card-->
+		<div class="bg-white border rounded shadow">
+			<div class="border-b p-2">
+				<h5 class="font-bold uppercase text-gray-600">Monthly Attendance Graph</h5>
+			</div>
+			<div class="p-5">
+				<canvas id="chartjs-1" class="chartjs" width="undefined" height="undefined"></canvas>
+			</div>
+		</div>
+		<!--/Graph Card-->
+	</div>
+</div>
+<div class="w-full mt-2">
+	<div class="bg-white z-10 overflow-auto shadow-2xl rounded-lg">
+		<table class="shadow-lg bg-white min-w-full">
+			<thead>
+				<tr>
+					<th class="bg-gray-500 border text-center px-1 py-2">Month</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">1</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">2</th>
+					<th class="bg-gray-400 border text-center px-2 py-2">3</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">4</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">5</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">6</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">7</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">8</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">9</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">10</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">11</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">12</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">13</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">14</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">15</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">16</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">17</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">18</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">19</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">20</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">21</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">22</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">23</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">24</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">25</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">26</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">27</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">28</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">29</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">30</th>
+					<th class="bg-gray-400 border text-center px-1 py-2">31</th>
+				</tr>
+			<tbody id='attendance-table'>
+
+			</tbody>
+		</table>
+	</div>
+</div>
+<script>
+	var att = document.getElementById('attendance-table');
+	var t_days = 0;
+	var present = 0;
+	var C_date = new Date();
+	var val_date = true;
+	var dict = {{profile_att|safe}};
+	var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"];
+	var month_days = [];
+	var i=3; // change this to cahnge sequence of months
+	var j=0;
+	while(i<15){ // change this to change sequence of months
+		j = i%12;
+		var tr = document.createElement("tr");
+		var th = document.createElement("th");
+		th.setAttribute("class", "bg-gray-400 border text-center px-1 py-2");
+		th.innerHTML = months[j];
+		tr.appendChild(th);
+		for(var day in dict[j]){
+			if (val_date){
+				var d = new Date(C_date.getFullYear(),i,Number(day));
+				if (d.getDay() == 0){
+					var th= document.createElement("th");
+					th.setAttribute("class", "bg-orange-500 border text-center px-1 py-2");
+					th.innerHTML = "S";
+				}
+				else if (dict[j][day]['0'] == 1){
+					var th= document.createElement("th");
+					th.setAttribute("class", "bg-green-500 border text-center px-1 py-2");
+					th.innerHTML = "P";
+					t_days++;
+					present++;
+				}
+				else if(dict[j][day]['0'] == 0){
+					var th = document.createElement("th");
+					th.setAttribute("class", "bg-red-500 border text-center px-1 py-2");
+					th.innerHTML = "A";
+					t_days++;
+				}
+				if (j == C_date.getMonth() && C_date.getDate() == day){
+					val_date = false;
+				}
+			}
+			else{
+				var th = document.createElement("th");
+				th.setAttribute("class", "bg-blue-200 border text-center px-1 py-2");
+				th.innerHTML = "-";
+			}
+			tr.appendChild(th);
+		}
+		att.appendChild(tr);
+		if (month_days.length == 0){
+			month_days.push(present);
+			var l_p = present;
+		}
+		else{
+			month_days.push(present-l_p);
+			l_p = present;
+		}
+		i++;
+	}
+</script>
+<script>
+	new Chart(document.getElementById("chartjs-4"), {
+		"type": "doughnut",
+		"data": {
+			"labels": ["Absent", "Present"],
+			"datasets": [{
+				"label": "Issues",
+				"data": [(t_days-present), present],
+				"backgroundColor": ["rgb(255, 99, 132)", "rgb(54, 162, 235)"]
+			}]
+		}
+	});
+	document.getElementById('Percentage').innerHTML=`${(((present)/(t_days))*100).toFixed(2)}%`;
+	document.getElementById('total_days').innerHTML=t_days;
+	new Chart(document.getElementById("chartjs-1"), {
+		"type": "bar",
+		"data": {
+			"labels": months.slice(3,12).concat(months.slice(0,3)),
+			"datasets": [{
+				"label": "Days Attended",
+				"data": month_days,
+				"fill": true,
+				"backgroundColor": "rgba(50, 94, 253, 0.489)",
+				"borderColor": "rgba(50, 94, 253)",
+				"borderWidth": 1
+			}]
+		},
+		"options": {
+			"scales": {
+				"yAxes": [{
+					"ticks": {
+						"beginAtZero": true
+					}
+				}]
+			}
+		}
+	});
+</script>
+<!-- Store the dates and the classes the school is going to open on sundays and holidays and the compare the here -->
+{% endblock %}
+

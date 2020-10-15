@@ -18,8 +18,8 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('Staff_ID', models.IntegerField()),
-                ('Post', models.CharField(choices=[('director', 'Director'), ('principal', 'Principal'), ('vice principal', 'Vice Principal'), ('accountant', 'Accountant'), ('receptionist', 'Receptionist')], max_length=20)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                ('Post', models.CharField(choices=[('director', 'Director'), ('principal', 'Principal'), ('vice principal', 'Vice Principal'), ('accountant', 'Accountant'), ('receptionist', 'Receptionist'), ('editor', 'Admin Editor(Have all kind of Permissions)')], max_length=20)),
+                ('institute', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='schools.institutes')),
             ],
         ),
     ]
