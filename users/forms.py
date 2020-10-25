@@ -28,14 +28,3 @@ class ProfileCreateForm(forms.ModelForm):
         widgets = {
             'DOB': forms.TextInput(attrs={'type':'date'}),
         }
-
-#  -----------------------registration form view ------------------------
-# def register(request):
-#     if request.method == "POST":
-#         form = UserRegistraionForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             redirect('login')
-#     else:
-#         form = UserRegistraionForm()
-#     return render(request, 'users/register.html', {'form':form})

@@ -1,13 +1,19 @@
 {% extends 'schools/staff_base.html' %}
 {% load static %}
 {% block main_panel %}
-    <div class="flex justify-start md:pt-2 sm:pt-12">
-        <div class=" block sm:hidden pt-1 items-center ">
-            <button onclick="checkaside()" id="aside-toggle" class="flex items-center px-3 py-2 border rounded text-gray-900 border-gray-600 hover:text-gray-900 hover:border-gray-900 appearance-none focus:outline-none">
-                <i class="fas fa-bars "></i>
-            </button>
+    <div class="sm:flex justify-between md:pt-2 sm:pt-12">
+        <div class="flex justify-start mt-2">
+            <div class=" block sm:hidden pt-1 items-center ">
+                <button onclick="checkaside()" id="aside-toggle" class="flex items-center px-3 py-2 border rounded text-gray-900 border-gray-600 hover:text-gray-900 hover:border-gray-900 appearance-none focus:outline-none">
+                    <i class="fas fa-bars "></i>
+                </button>
+            </div>
+            <h1 class="text-3xl text-black ml-4">All Staff</h1>
         </div>
-        <h1 class="text-3xl text-black ml-4">All Staff Members</h1>
+        <form class="flex " action="{% url 'search' 'staff' %}" method="GET">
+            <input class="w-full px-5 py-1 my-4 text-gray-700 rounded" type="text" value='{{search}}' placeholder="Search" name='q'>
+            <button class="ml-2 px-4 py-2 my-4 bg-indigo-500 rounded-lg text-white hover:bg-indigo-400">Search</button>
+        </form>
     </div> 
     <div class="w-full mt-2 ">
         <div class="bg-white z-10 overflow-auto rounded-lg">

@@ -25,6 +25,7 @@ class student(models.Model):
     Admission_no = models.IntegerField(blank=False)
     Class = models.CharField(max_length=2,choices=CLASS,blank=False)
     Section = models.CharField(max_length=2,blank=False)
+    Roll_no = models.IntegerField(blank=False,null=False)
     Note_about_Student = models.TextField(max_length=500,blank=True)
     institute = models.ForeignKey(institutes,on_delete=models.CASCADE,null=True)
     # remaning_fees = models.IntegerField(blank=False,default=-1)

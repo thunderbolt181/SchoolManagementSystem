@@ -92,6 +92,7 @@ def dashboard(request,staff):
 # ******************************************** Search Views **********************************************************
 
 @login_required
+@user_passes_test(staff_test)
 def search(request,status):
     if request.method == "GET":
         if request.GET.get('q') != None and request.GET.get('q') != "":
@@ -245,7 +246,6 @@ def EditStudent(request,status,id):
         if user_form.is_valid() and profile_form.is_valid() and status_form.is_valid():
             user_form.save()
             profile_form.save()
-            print(status_form)
             status_form.save()
             return redirect("profile",status,id)
     else:

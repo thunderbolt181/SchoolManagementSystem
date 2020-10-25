@@ -1,0 +1,204 @@
+{% extends extend_tag %}
+{% load static %}
+{% block main_panel %}
+<div class="flex justify-start md:pt-2 sm:pt-12">
+  <div class="flex justify-start">
+        <div class=" block sm:hidden pt-1 items-center ">
+            <button onclick="checkaside()" id="aside-toggle" class="flex items-center px-3 py-2 border rounded text-gray-900 border-gray-600 hover:text-gray-900 hover:border-gray-900 appearance-none focus:outline-none">
+                <i class="fas fa-bars "></i>
+            </button>
+        </div>
+        <h1 class="text-3xl text-black ml-4">{{class}}-{{section}} Strength : {{result_no}}</h1>
+    </div>
+</div>
+<div class="sm:flex justify-end p-1 bg-gray-500 rounded-lg">
+    <input id="date" class="w-38 my-2 px-5 py-1 text-gray-700 bg-gray-200 rounded" type="date">
+    <div class="flex justify-start ml-2 my-2">
+        <p class='mt-2'>MARK ALL:</p>
+        <select onchange="markall(this)" class="block ml-2 py-1 px-2 bg-gray-200 border border-gray-200 text-gray-700 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
+            <option value="1">Present</option>
+            <option value="0">Absent</option>
+        </select>
+    </div>
+    <button onclick="submitvalue()" type="button" class="my-2 ml-2 px-4 py-2 bg-indigo-500 rounded-lg text-white hover:bg-indigo-400">Submit</button>
+</div>
+<div id='message' class="my-2">
+
+</div>
+<div class="w-full mt-3 ">
+  <div class="bg-white z-10 overflow-auto shadow-2xl rounded-lg">
+      <table class="min-w-full leading-normal ">
+          <thead>
+              <tr>
+                  <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left  font-semibold text-gray-600 uppercase tracking-wider">
+                      Name
+                  </th>
+                  {% if status == "teacher" %}
+                      <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left  font-semibold text-gray-600 uppercase tracking-wider">
+                          Faculty ID
+                      </th>
+                      <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider">
+                          Post
+                      </th>
+                  {% elif status == "staff" %}
+                      <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left  font-semibold text-gray-600 uppercase tracking-wider">
+                          staff ID
+                      </th>
+                      <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider">
+                          Post
+                      </th>
+                  {% else %}
+                      <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left  font-semibold text-gray-600 uppercase tracking-wider">
+                        Amission No.
+                      </th>
+                      <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider">
+                        Roll No.
+                      </th>
+                  {% endif %}
+                  <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left  font-semibold text-gray-600 uppercase tracking-wider">
+                      View Details
+                  </th>
+              </tr>
+          </thead>
+          <tbody>
+              {% for profile in profiles %}
+                  <tr>
+                      <td class="px-5 py-2 border-b border-gray-200 bg-white ">
+                          <div class="flex items-center">
+                              <div class="flex-shrink-0 w-10 h-10">
+                                  <img class="w-full h-full rounded-full" src="{{profile.profile_user.Profile_pic.url}}" />
+                              </div>
+                              <div class="ml-3">
+                                  <p class="text-gray-900 whitespace-no-wrap">
+                                      {{profile.user.first_name}} {{profile.user.last_name}}
+                                  </p>
+                              </div>
+                          </div>
+                      </td>
+                      {% if status == "teacher" %}
+                          <td class="px-5 py-2 border-b border-gray-200 bg-white ">
+                              <p class="text-gray-900 whitespace-no-wrap">{{profile.Faculty_ID}}</p>
+                          </td>
+                          <td class="px-5 py-2 border-b border-gray-200 bg-white ">
+                              <p class="text-gray-900 whitespace-no-wrap">
+                                  {{profile.Post}}
+                              </p>
+                          </td>
+                      {% elif status == "staff" %}
+                          <td class="px-5 py-2 border-b border-gray-200 bg-white ">
+                              <p class="text-gray-900 whitespace-no-wrap">{{profile.Staff_ID}}</p>
+                          </td>
+                          <td class="px-5 py-2 border-b border-gray-200 bg-white ">
+                              <p class="text-gray-900 whitespace-no-wrap">
+                                  {{profile.Post}}
+                              </p>
+                          </td>
+                      {% else %}
+                          <td class="px-5 py-2 border-b border-gray-200 bg-white ">
+                            <p class="text-gray-900 whitespace-no-wrap">
+                                {{profile.Class}}-{{profile.Section}}
+                            </p>
+                          </td>
+                          <td class="px-5 py-2 border-b border-gray-200 bg-white ">
+                              <p class="Roll text-gray-900 whitespace-no-wrap">{{profile.Roll_no}}</p>
+                          </td>
+                      {% endif %}
+                      <td class="px-5 py-2 border-b border-gray-200 bg-white ">
+                        <select class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-1 px-2 pr-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 Attendance">
+                            <option value="1">Present</option>
+                            <option value="0">Absent</option>
+                            <option value="2">On Leave</option>
+                        </select>                  
+                      </td>
+                  </tr>
+              {% endfor %}
+          </tbody>
+      </table>
+  </div>
+  {% if profiles.has_other_pages %}
+      <ul class="w-full flex p-4 z-11 justify-center bg-white mt-2 rounded-lg">
+          {% if profiles.has_previous %}
+              <li><a class="text-blue-600" href="?page={{ profiles.previous_page_number }}"><button class='p-2 px-4 mr-2 border border-blue-600 rounded-full'>&laquo;</button></a></li>
+          {% else %}
+              <li class="text-gray-600"><button class='p-2 px-4 mr-2 border border border-gray-600 rounded-full'><span>&laquo;</span></button></li>
+          {% endif %}
+          {% for i in profiles.paginator.page_range %}
+              {% if profiles.number > 3 and forloop.first %}
+                  <li><a class="text-blue-600" href="?page=1"><button class='p-2 px-4 mr-2 border border-blue-600 rounded-full'>1</button></a></li>
+                  <li class="text-gray-600"><button class='p-2 px-4 mr-2 border border border-gray-600 rounded-full'><span>...</span></button></li>
+              {% endif %}
+              {% if profiles.number == i %}
+                  <li class="text-gray-600"><button class='p-2 px-4 mr-2 border border border-gray-600 rounded-full'><span>{{ i }} </span></button></li>
+              {% elif i > profiles.number|add:'-3' and i < profiles.number|add:'3' %}
+                  <li><a class="text-blue-600" href="?page={{ i }}"><button class='p-2 px-4 mr-2 border border-blue-600 rounded-full'>{{ i }}</button></a></li>
+              {% endif %}
+              {% if profiles.paginator.num_pages > profiles.number|add:'3' and forloop.last %}
+                  <li class="text-gray-600"><button class='p-2 px-4 mr-2 border border border-gray-600 rounded-full'><span>...</span></button></li>
+                  <li><a class="text-blue-600" href="?page={{ profiles.paginator.num_pages }}"><button class='p-2 px-4 mr-2 border border-blue-600 rounded-full'>{{ profiles.paginator.num_pages }}</button></a></li>
+              {% endif %}
+          {% endfor %}
+          {% if profiles.has_next %}
+              <li><a class="text-blue-600" href="?page={{ profiles.next_page_number }}"><button class='p-2 px-4 mr-2 border border-blue-600 rounded-full'>&raquo;</button></a></li>
+          {% else %}
+              <li class="text-gray-600"><button class='p-2 px-4 mr-2 border border-gray-600 rounded-full'><span>&raquo;</span></button></li>
+          {% endif %}
+      </ul>
+  {% endif %}
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script>
+    var att = document.getElementsByClassName('Attendance');
+    var roll = document.getElementsByClassName('Roll');
+    var selected_date = document.getElementById('date');
+    var message = document.getElementById('message');
+    selected_date.valueAsDate = new Date();
+    function markall(e){
+        for(i=0;i<att.length;i++){
+            att[i].value=e.value;
+        }
+    }
+    function submitvalue(){
+        var attendance={};
+        for(i=0;i<att.length;i++){
+            attendance[`${roll[i].innerHTML}`]=att[i].value;
+        }
+        date = selected_date.value.split('-');
+        attendance['c']={{class|safe}};
+        attendance['s']=`${{section|safe}}`[1];
+        attendance['date']=date[2];
+        attendance['month']=date[1];
+        console.log(attendance)
+        data = {
+            csrfmiddlewaretoken: "{{ csrf_token }}",
+            'attendance':JSON.stringify(attendance)
+            }
+        $.ajax({
+            url:"{% url 'update-attendance' %}",
+            "type": "post",
+            "data": data,
+            dataType : "json",
+            success: function (data) {
+                if (data['is_taken']=="True") {
+                    message.innerHTML=`<div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+                                            <p class="font-bold">Success</p>
+                                            <p>Attendane of class ${attendance['c']}-${attendance['s']}  for ${selected_date.value} was updated</p>
+                                        </div>`
+                }
+                else{
+                    message.innerHTML=`<div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+                                            <p class="font-bold">Warning</p>
+                                            <p>Unable to update Attendance</p>
+                                        </div>`
+                }
+            },
+            error: function (){
+                message.innerHTML=`<div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+                                            <p class="font-bold">Warning</p>
+                                            <p>An Error occured while updating Attendance</p>
+                                        </div>`
+            }
+        })
+    }
+</script>
+{% endblock %}

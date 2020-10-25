@@ -23,13 +23,13 @@
                 <a href="{% url 'dashboard' 'student' %}" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item text-sm">
                     <i class="fas fa-tachometer-alt mr-3"></i> Dashboard
                 </a>
-                <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item text-sm">
-                    <i class="fas fa-user-tie mr-3"></i>Coordinators
+                <a href="#" class="modal-open flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item text-sm">
+                    <i class="fas fa-calendar-alt mr-3"></i>Attendance
                 </a>
                 <a href="#" class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item text-sm">
                     <i class="fas fa-align-left mr-3"></i>Forms
                 </a>
-                <a class="modal-open flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item text-sm">
+                <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item text-sm">
                     <i class="fa fa-search mr-3"></i>Search
                 </a>
                 <a class="flex items-center text-white opacity-75 hover:opacity-100 py-4 pl-6 nav-item w-64">
@@ -47,7 +47,6 @@
         </div>
     </div>
 </div>
-<!-- https://www.youtube.com/watch?v=imZa-fTB5cU -->
 <!-- Modal -->
 <div class="modal opacity-0 pointer-events-none fixed w-full h-full top-0 left-0 flex items-center justify-center z-30">
     <div class="modal-overlay absolute w-full h-full bg-gray-900 opacity-50"></div>
@@ -64,7 +63,7 @@
         <div class="flex justify-between items-center pb-3">
             <div class="flex justify-start items-center">
                 <i class="fa fa-search mr-3"></i>
-                <p class="text-2xl font-bold">Search</p>
+                <p class="text-2xl font-bold">Attendance</p>
             </div>
             <div class="modal-close cursor-pointer z-50">
                 <svg class="fill-current text-black" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18">
@@ -73,13 +72,15 @@
             </div>
         </div>
         <!--Body-->
-        <p>Enter Students Admission Number OR Name</p>
-        <form class="" action="{% url 'search' 'student' %}" method="GET">
-            <input class="w-full px-5 py-1 my-4 text-gray-700 bg-gray-200 rounded" type="text" value='{{search}}' placeholder="Search" name='q'>
+        <form class="" action="{% url 'mark-attendance' 'student' %}" method="GET">
+            <div class="flex w-full justify-center overflow-auto">
+                <input class="w-32 py-2 px-2 my-4 text-gray-700 bg-gray-200 rounded" type="text" value='{{class}}' placeholder="class" name='class'>
+                <input class="w-32 py-2 px-2 ml-4 my-4 text-gray-700 bg-gray-200 rounded" type="text" value='{{section}}' placeholder="Section" name='section'>
+            </div>
             <div class="flex justify-end pt-2">
                 <button type="button" class="modal-close px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">Close</button>
                 <button class=" px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400">Search</button>
-              </div>
+            </div>
         </form>
         <!--Footer-->
       </div>
@@ -163,5 +164,5 @@
       modal.classList.toggle('pointer-events-none')
       body.classList.toggle('modal-active')
     }
-  </script>
+</script>
 {% endblock %}

@@ -226,9 +226,17 @@
     if(is_cordinator.checked==false){
         cordinator.classList.add("hidden");
     }
+    else{
+        document.getElementById('id_Cordinator').toggleAttribute('required');
+    }
     if(is_classteacher.checked==false){
         for(i=0;i<Class.length;i++){
             Class[i].classList.add("hidden");
+        }
+    }
+    else{
+        for(i=0;i<Class.length;i++){
+            document.getElementById('id_Cordinator').toggleAttribute('required');
         }
     }
     is_cordinator.setAttribute('oninput','printvalcor(this)');
