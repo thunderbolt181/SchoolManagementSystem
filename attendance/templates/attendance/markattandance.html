@@ -18,13 +18,12 @@
         <select onchange="markall(this)" class="block ml-2 py-1 px-2 bg-gray-200 border border-gray-200 text-gray-700 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500">
             <option value="1">Present</option>
             <option value="0">Absent</option>
+            <option value="3">Leave Unchanged</option>
         </select>
     </div>
     <button onclick="submitvalue()" type="button" class="my-2 ml-2 px-4 py-2 bg-indigo-500 rounded-lg text-white hover:bg-indigo-400">Submit</button>
 </div>
-<div id='message' class="my-2">
-
-</div>
+<div id='message' class="my-2"></div>
 <div class="w-full mt-3 ">
   <div class="bg-white z-10 overflow-auto shadow-2xl rounded-lg">
       <table class="min-w-full leading-normal ">
@@ -108,6 +107,7 @@
                             <option value="1">Present</option>
                             <option value="0">Absent</option>
                             <option value="2">On Leave</option>
+                            <option value="3">Leave Unchanged</option>
                         </select>                  
                       </td>
                   </tr>
@@ -161,18 +161,19 @@
     function submitvalue(){
         var attendance={};
         for(i=0;i<att.length;i++){
-            attendance[`${roll[i].innerHTML}`]=att[i].value;
+            if (att[i].value != 3){
+                attendance[`${roll[i].innerHTML}`]=att[i].value;
+            }
         }
         date = selected_date.value.split('-');
         attendance['c']={{class|safe}};
         attendance['s']=`${{section|safe}}`[1];
         attendance['date']=date[2];
         attendance['month']=date[1];
-        console.log(attendance)
         data = {
             csrfmiddlewaretoken: "{{ csrf_token }}",
             'attendance':JSON.stringify(attendance)
-            }
+            };
         $.ajax({
             url:"{% url 'update-attendance' %}",
             "type": "post",
@@ -186,14 +187,14 @@
                                         </div>`
                 }
                 else{
-                    message.innerHTML=`<div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+                    message.innerHTML=`<div class="bg-green-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
                                             <p class="font-bold">Warning</p>
                                             <p>Unable to update Attendance</p>
                                         </div>`
                 }
             },
             error: function (){
-                message.innerHTML=`<div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+                message.innerHTML=`<div class="bg-green-100 border-l-4 border-red-500 text-red-700 p-4" role="alert">
                                             <p class="font-bold">Warning</p>
                                             <p>An Error occured while updating Attendance</p>
                                         </div>`
