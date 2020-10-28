@@ -9,7 +9,7 @@ import shutil
 
 @receiver(pre_delete, sender=profile)
 def auto_delete_profile_pic_with_profile(sender, instance, **kwargs):
-    path = os.path.split(instance.Profile_pic.path)[0]
+    path = os.path.split(instance.Profile_pic.path)
     shutil.rmtree(path, ignore_errors=True)
 
 @receiver(pre_save, sender=profile)

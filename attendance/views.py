@@ -18,18 +18,28 @@ def Year_Attendance(request,staff,profileid):
     return render(request,'attendance/view_attendance.html',content)
 
 @login_required
+def fetch_attendance(request,profileid):
+    if request.is_ajax and request.method == 'GET':
+        try:
+            results = attendance.objects.get(id=(profileid))
+            return JsonResponse({'0':"True",'1':results.Absent})
+        except:
+            return JsonResponse({'0':'False'})
+    else:
+        return JsonResponse({'0':'False'})
+
+@login_required
 def update_attendance(request):
     if request.is_ajax and request.method == 'POST':
         data = json.loads(request.POST['attendance'])
-        month = f"{int(data['month'])-1}"
-        date = f"{data['date']}"
+        month = str(int(data['month'])-1)
+        date = str(int(data['date']))
         att=[]
         lookup = Q(Class__icontains = data['c']) & Q(Section__icontains = data['s'])
         results = request.user.staff.institute.student_set.filter(lookup).order_by('Roll_no')
         try:
             for i in results:
                 if str(i.Roll_no) in data.keys():
-                    print("yes")
                     i.profile_user.attendance.Absent[month][date][0] = data[f'{i.Roll_no}']
                     att.append(i.profile_user.attendance)
             attendance.objects.bulk_update(att,['Absent'])
