@@ -21,7 +21,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = '@8i+z^l1er20v(l2^tp!-z8_qr)!!085z%ozb_x@ng59c=duum'
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True #os.environ['DJANGO_DEBUG'] != "False"
 
@@ -97,7 +98,7 @@ WSGI_APPLICATION = 'SchoolManagementSystem.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'SmsDB',
+        'NAME': os.environ['DB_UNAME'],
         'USER': os.environ['DB_UNAME'],
         'PASSWORD': os.environ['DB_PASS'],
         'HOST': 'localhost',
@@ -105,6 +106,12 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
@@ -161,9 +168,9 @@ LOGIN_URL='login'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT = 587
-EMAIL_HOST_USER = os.environ['DEMAIL']
-EMAIL_HOST_PASSWORD = os.environ['DAPASS']
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = os.environ['DEMAIL']
+# EMAIL_HOST_PASSWORD = os.environ['DAPASS']

@@ -20,6 +20,7 @@
 	$.ajax({
 		url:"{% url 'fetch-attendance' profile.attendance.id %}",
 		"type": "get",
+		headers: {"X-Requested-With": "XMLHttpRequest"},
 		// "data": {{profile.attendance.id}},
 		dataType : "json",
 		success: function (data) {

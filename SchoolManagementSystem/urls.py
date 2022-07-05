@@ -11,7 +11,7 @@ admin.autodiscover()
 admin.site.enable_nav_sidebar = False
 
 urlpatterns = [
-    path('iinaya/', admin.site.urls),
+    path('admin/', admin.site.urls),
     path('login/', user_view.login, name='login'),  
     path('logout/', user_view.logout, name='logout'),
     # path('students/',include('students.urls')),

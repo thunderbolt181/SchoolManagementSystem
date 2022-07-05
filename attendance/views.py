@@ -19,7 +19,7 @@ def Year_Attendance(request,staff,profileid):
 
 @login_required
 def fetch_attendance(request,profileid):
-    if request.is_ajax and request.method == 'GET':
+    if request.method == 'GET':
         try:
             results = attendance.objects.get(id=(profileid))
             return JsonResponse({'0':"True",'1':results.Absent})
@@ -30,7 +30,7 @@ def fetch_attendance(request,profileid):
 
 @login_required
 def update_attendance(request):
-    if request.is_ajax and request.method == 'POST':
+    if request.method == 'POST':
         data = json.loads(request.POST['attendance'])
         month = str(int(data['month'])-1)
         date = str(int(data['date']))
