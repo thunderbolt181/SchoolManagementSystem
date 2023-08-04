@@ -29,13 +29,13 @@ def fetch_attendance(request,profileid):
         return JsonResponse({'0':'False'})
 
 @login_required
-def update_attendance(request):
+def updateAttendanceStudent(request):
     if request.method == 'POST':
         data = json.loads(request.POST['attendance'])
         month = str(int(data['month'])-1)
         date = str(int(data['date']))
         att=[]
-        lookup = Q(Class__icontains = data['c']) & Q(Section__icontains = data['s'])
+        lookup = Q(Class__icontains = int(data['c'])) & Q(Section__icontains = data['s'])
         results = request.user.staff.institute.student_set.filter(lookup).order_by('Roll_no')
         try:
             for i in results:
@@ -50,26 +50,64 @@ def update_attendance(request):
         return JsonResponse({'is_taken':'False'})
 
 @login_required
-def MarkAttendance(request,status):
+def updateAttendanceTeacher(request):
+    if request.method == 'POST':
+        print('teacher attendance')
+        data = json.loads(request.POST['attendance'])
+        month = str(int(data['month'])-1)
+        date = str(int(data['date']))
+        att=[]
+        lookup = Q(Faculty_ID__icontains = data['search']) | Q(user__first_name__icontains = data['search']) | Q(user__last_name__icontains = data['search'])
+        results = request.user.staff.institute.teachers_set.filter(lookup)
+        try:
+            for i in results:
+                if str(i.Faculty_ID) in data.keys():
+                    i.profile_user.attendance.Absent[month][date][0] = data[f'{i.Faculty_ID}']
+                    att.append(i.profile_user.attendance)
+            attendance.objects.bulk_update(att,['Absent'])
+            return JsonResponse({'is_taken':'True'})
+        except:
+            return JsonResponse({'is_taken':'False'})
+    else:
+        return JsonResponse({'is_taken':'False'})
+
+@login_required
+def updateAttendanceStaff(request):
+    if request.method == 'POST':
+        data = json.loads(request.POST['attendance'])
+        month = str(int(data['month'])-1)
+        date = str(int(data['date']))
+        att=[]
+        lookup = Q(Staff_ID__icontains = data['search']) | Q(user__first_name__icontains = data['search']) | Q(user__last_name__icontains = data['search'])
+        results = request.user.staff.institute.staff_set.filter(lookup)
+        try:
+            for i in results:
+                if str(i.Staff_ID) in data.keys():
+                    i.profile_user.attendance.Absent[month][date][0] = data[f'{i.Staff_ID}']
+                    att.append(i.profile_user.attendance)
+            attendance.objects.bulk_update(att,['Absent'])
+            return JsonResponse({'is_taken':'True'})
+        except:
+            return JsonResponse({'is_taken':'False'})
+    else:
+        return JsonResponse({'is_taken':'False'})
+
+@login_required
+def MarkAttendanceStudent(request):
     if request.method == 'GET':
         if request.GET.get('class') != None and request.GET.get('section') != None and request.GET.get('class') != "" and request.GET.get('section') != "":
             c = request.GET['class']
             s = request.GET['section']
-            if status == 'student':
-                lookup = Q(Class__icontains = c) & Q(Section__icontains = s)
-                results = request.user.staff.institute.student_set.filter(lookup).order_by('Roll_no')
-            elif status == 'staff':
-                pass
-            else:
-                pass
+            lookup = Q(Class__icontains = c) & Q(Section__icontains = s)
+            results = request.user.staff.institute.student_set.filter(lookup).order_by('Roll_no')
             if len(results) !=0:
                 content = {
                     'profiles':results,
                     'result_no':len(results),
                     'class':c,
                     'section':s,
-                    'extend_tag': f"schools/{status}_base.html",
-                    'status': status,
+                    'extend_tag': f"schools/student_base.html",
+                    'status':"student",
                 }
                 return render(request, 'attendance/markattandance.html',content)
             else:
@@ -78,13 +116,62 @@ def MarkAttendance(request,status):
                     'result_no':" 0",
                     'class':c,
                     'section':s,
-                    'extend_tag': f"schools/{status}_base.html"
+                    'extend_tag': f"schools/student_base.html"
                 }
                 return render(request, 'attendance/markattandance.html',content)
         else:
-            if status == 'student':
-                return redirect("dashboard", "student")
-            elif status == 'staff':
-                return redirect("dashboard", "staff")
+            return redirect("dashboard", "student")
+
+@login_required
+def MarkAttendanceTeacher(request):
+    if request.method == 'GET':
+        if request.GET.get('search') != None and request.GET.get('search') != "":
+            search = request.GET['search']
+            lookup = Q(Faculty_ID__icontains = search) | Q(user__first_name__icontains = search) | Q(user__last_name__icontains = search)
+            results = request.user.staff.institute.teachers_set.filter(lookup)
+            if len(results) !=0:
+                content = {
+                    'profiles':results,
+                    'result_no':len(results),
+                    'search':search,
+                    'extend_tag': f"schools/teacher_base.html",
+                    'status':"teacher",
+                }
+                return render(request, 'attendance/markattandance.html',content)
             else:
-                return redirect("dashboard", "teacher")
+                content = {
+                    'no_result':"No Search Results Found",
+                    'result_no':" 0",
+                    'search':search,
+                    'extend_tag': f"schools/teacher_base.html"
+                }
+                return render(request, 'attendance/markattandance.html',content)
+        else:
+            return redirect("dashboard", "teacher")
+        
+@login_required
+def MarkAttendanceStaff(request):
+    if request.method == 'GET':
+        if request.GET.get('search') != None and request.GET.get('search') != "":
+            search = request.GET['search']
+            lookup = Q(Staff_ID__icontains = search) | Q(user__first_name__icontains = search) | Q(user__last_name__icontains = search)
+            results = request.user.staff.institute.staff_set.filter(lookup)
+            if len(results) !=0:
+                content = {
+                    'profiles':results,
+                    'result_no':len(results),
+                    'search':search,
+                    'extend_tag': f"schools/staff_base.html",
+                    'status':"staff",
+                }
+                return render(request, 'attendance/markattandance.html',content)
+            else:
+                content = {
+                    'no_result':"No Search Results Found",
+                    'result_no':" 0",
+                    'search':search,
+                    'extend_tag': f"schools/staff_base.html"
+                }
+                return render(request, 'attendance/markattandance.html',content)
+        else:
+            return redirect("dashboard", "staff")

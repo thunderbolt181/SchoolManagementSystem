@@ -9,11 +9,14 @@ def login(request):
         password = request.POST.get('password')
         user = auth.authenticate(username=username, password=password)
         if user is not None:
-            if user.profile.status == 'staff':
-                auth.login(request, user)
-                return redirect('home')
-            else:
-                messages.error(request, 'User has no permission to access this link')
+            try:
+                if user.profile.status == 'staff':
+                    auth.login(request, user)
+                    return redirect('home')
+                else:
+                    messages.error(request, 'User has no permission to access this link')
+            except :
+                messages.error(request, "User Profile does not exits.")
         else:
             messages.error(request, 'Incorrect Username/Password')
     return render(request,'users/login.html')

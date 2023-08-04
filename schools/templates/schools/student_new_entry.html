@@ -18,7 +18,6 @@
                     <form class="p-10 bg-white rounded-lg shadow-2xl" method="POST"  enctype="multipart/form-data">
                         <p class="text-lg text-gray-800 font-medium pb-4">Student information</p>
                         {% csrf_token %}
-                        <!-- {{user_form|crispy}} -->
                         {% for field in user_form %}
                             <div class="">
                                 <label class="block text-sm text-gray-600" for="{{ field.name }}"></label>{{ field.label_tag }}</label>

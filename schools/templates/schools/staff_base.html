@@ -73,8 +73,8 @@
             </div>
         </div>
         <!--Body-->
-        <form class="" action="{% url 'search' 'staff' %}" method="GET">
-            <input class="w-full px-5 py-1 my-4 text-gray-700 bg-gray-200 rounded" type="text" value='{{search}}' placeholder="Search" name='q'>
+        <form class="" action="{% url 'mark-attendance-staff' %}" method="GET">
+            <input class="w-full px-5 py-1 my-4 text-gray-700 bg-gray-200 rounded" type="text" value='{{search}}' placeholder="Search" name='search'>
             <div class="flex justify-end pt-2">
                 <button type="button" class="modal-close px-4 bg-transparent p-3 rounded-lg text-indigo-500 hover:bg-gray-100 hover:text-indigo-400 mr-2">Close</button>
                 <button class=" px-4 bg-indigo-500 p-3 rounded-lg text-white hover:bg-indigo-400">Next</button>
