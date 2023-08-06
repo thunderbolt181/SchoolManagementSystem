@@ -237,6 +237,7 @@ def EditDetails(request,status,id):
         else:
             status_form = TeacherCreateForm(instance=obj)
     context={
+        'profile': obj,
         'user_form' : user_form,
         'staff_form' : status_form,
         'extend_tag': f"schools/{status}_base.html"

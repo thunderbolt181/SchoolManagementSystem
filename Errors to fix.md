@@ -4,10 +4,10 @@
 2. Find the way to update attendance in teacher and staff. It opens search panel (Change it to attandance marking panel).[✅]
     - Checking for multiple update remaining.(First make multiple accounts and then test).
 3. Cannot view my profile from user drop down menu in top right corner. [✅]
-4. Mark which fields are necessory in create new entry form in studen, teacher and staff.
-5. Check yearly attendance dashboard, might be displaying the pie chart wrong.
+4. Mark which fields are necessory in create new entry form in student, teacher and staff.[✅]
+5. Check yearly attendance dashboard, might be displaying the pie chart wrong.[✅]
 6. Users cannot change their passwords, might have to make it from scratch.
-7. Take a look how a UserEditForm is displayed(Profile Pic field should be changed, DOB should be re-formatted).
+7. Take a look how a UserEditForm is displayed(Profile Pic field should be changed, DOB should be re-formatted).[✅]
 
 
 

@@ -131,6 +131,7 @@
 		var t_days = 0;
 		var present = 0;
 		var leave = 0;
+		var absent = 0;
 		var C_date = new Date();
 		var val_date = true;
 		// var dict = {{profile_att|safe}};
@@ -165,6 +166,7 @@
 						th.setAttribute("class", "bg-red-500 border text-center px-1 py-2");
 						th.innerHTML = "A";
 						t_days++;
+						absent++;
 					}
 					else if(dict[j][day]['0'] == 2){
 						var th = document.createElement("th");
@@ -201,7 +203,7 @@
 				"labels": ["Absent", "Present","Leave"],
 				"datasets": [{
 					"label": "Issues",
-					"data": [(t_days-present), present,leave],
+					"data": [absent, present,leave],
 					"backgroundColor": ["rgb(255, 99, 132)", "rgb(54, 162, 235)",'#F6E05E']
 				}]
 			}

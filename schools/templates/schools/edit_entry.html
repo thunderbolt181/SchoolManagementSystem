@@ -9,28 +9,56 @@
         </div>
         <h1 class="text-3xl text-black ml-4">Edit Details</h1>
     </div>
-    <div class="w-full mt-6 ">
-        <div class=" z-10 overflow-auto flex lg:justify-center ">
+    <div class="w-full mt-20">
+        <div class=" z-10 overflow-auto flex lg:justify-center overflow-visible">
             <!-- Form -->
             <div class="w-full lg:w-3/4 pl-0 lg:pl-2">
                 <div class="leading-loose">
-                    <form class="p-10 bg-white rounded-lg shadow-2xl" method="POST"  enctype="multipart/form-data">
-                        <p class="text-lg text-gray-800 font-medium pb-4">Teacher information</p>
+                    <form class="relative p-10 bg-white rounded-lg shadow-2xl" method="POST"  enctype="multipart/form-data">
+                        <div class="absolute bg-gray-100 sm:w-64 sm:h-64 w-40 h-40 border-4 border-gray-300 p-4 m-4" style="top:-100px;left:0;right:0;margin-left: auto;margin-right: auto;">
+                                <img src="{{profile.user.Profile_pic.url}}" alt="Profile_pic" >
+                        </div>
+                        <p class="text-lg text-gray-800 font-medium pb-4 mt-20">Teacher information</p>
                         {% csrf_token %}
                         {% for field in user_form %}
-                        <div class="">
-                            <label class="block text-sm " for="{{ field.name }}">{{ field.label_tag }}</label>
-                            <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" value="{{field.value}}" maxlength="{{ field.field.max_length }}" id="{{ field.id_for_label }}" name="{{ field.name }}" type="{{ field.field.widget.input_type }}" required  >
-                            <div class="bg-red-400">{{ field.errors }}</div>
-                            <div class="bg-yellow-200 border-l-4 mt-2 border-yellow-500 pl-5 text-xs">{{ field.help_text }}</div>
-                        </div>
+                            {% if field.name == "Gender" or field.name == "Category" %}
+                                <label class="block text-sm" for="{{ field.name }}">
+                                    {{ field.label_tag }}{% if field.field.required %}*{% endif %}
+                                </label>
+                                <select class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" value="{{field.value}}" id="{{ field.id_for_label }}" name="{{ field.name }}" type="{{ field.field.widget.input_type }}" required>
+                                    {% for org in field %}
+                                        {{ org }}
+                                    {% endfor %}
+                                </select>
+                                <div class="bg-red-400">{{ field.errors }}</div>
+                            {% elif field.name == 'DOB' %}
+                                <div class="">
+                                    <label class="block text-sm " for="{{ field.name }}">{{ field.label_tag }}{% if field.field.required %}*{% endif %}</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" value="{{field.value}}" maxlength="{{field.field.max_length}}" id="{{ field.id_for_label }}" name="{{ field.name }}" type="date" required>
+                                    <div class="bg-red-400">{{ field.errors }}</div>
+                                    <div class="bg-yellow-200 border-l-4 mt-2 border-yellow-500 pl-5 text-xs ">{{ field.help_text }}</div>
+                                </div>
+                            {% elif field.name == 'Profile_pic' %}
+                                <label class="block text-sm  flex justify-start items-center" for="{{ field.name }}">
+                                    {{ field.label_tag }}{% if field.field.required %}*{% endif %}
+                                </label>
+                                {{field}}
+                                <div class="bg-red-400">{{ field.errors }}</div>
+                            {% else %}
+                                <div class="">
+                                    <label class="block text-sm " for="{{ field.name }}">{{ field.label_tag }}{% if field.field.required %}*{% endif %}</label>
+                                    <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" value="{{field.value}}" maxlength="{{field.field.max_length}}" id="{{ field.id_for_label }}" name="{{ field.name }}" type="{{ field.field.widget.input_type }}" required>
+                                    <div class="bg-red-400">{{ field.errors }}</div>
+                                    <div class="bg-yellow-200 border-l-4 mt-2 border-yellow-500 pl-5 text-xs ">{{ field.help_text }}</div>
+                                </div>
+                            {% endif %}
                         {% endfor %}
                         <hr class="my-4">
                         {% for field in staff_form %}
                             {% if field.name == 'Subject' or field.name == 'Spacility' or field.name == 'Qualifications' %}
                                 <div id="{{field.name}}">
                                     <label class="block text-sm  flex justify-start items-center" for="{{ field.name }}">
-                                        {{ field.label_tag }}
+                                        {{ field.label_tag }}{% if field.field.required %}*{% endif %}
                                         <button type='button' class='add-list bg-green-300 text-black p-1 py-0 mx-1 rounded' >+</button>
                                     </label>
                                     <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" value="{{field.value}}" id="{{ field.id_for_label }}" name="{{ field.name }}" type="{{ field.field.widget.input_type }}" required  >
@@ -39,7 +67,7 @@
                                 </div>
                             {% elif field.name == 'Post' %}
                                 <label class="block text-sm  flex justify-start items-center" for="{{ field.name }}">
-                                    {{ field.label_tag }}
+                                    {{ field.label_tag }}{% if field.field.required %}*{% endif %}
                                 </label>
                                 <select class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" value="{{field.value}}" id="{{ field.id_for_label }}" name="{{ field.name }}" type="{{ field.field.widget.input_type }}" required  >
                                     {% for org in field %}
@@ -49,27 +77,27 @@
                                 <div class="bg-red-400">{{ field.errors }}</div>
                             {% elif field.name == 'is_cordinator' or field.name == 'is_classteacher' %}
                                 <div class="my-1 flex justify-start items-center ">
-                                    <label class="block text-sm " for="{{ field.name }}">{{ field.label_tag }}</label>
+                                    <label class="block text-sm " for="{{ field.name }}">{{ field.label_tag }}{% if field.field.required %}*{% endif %}</label>
                                     {{field}}
                                     <div class="bg-red-400">{{ field.errors }}</div>
                                 </div>
                             {% elif field.name == 'Class' or field.name == 'Section' or field.name == 'Cordinator' %}
                                 {% if field.name == 'Class' or field.name == 'Section' %}
                                     <div class="my-1 classes">
-                                        <label class="block text-sm " for="{{ field.name }}">{{ field.label_tag }}</label>
+                                        <label class="block text-sm " for="{{ field.name }}">{{ field.label_tag }}{% if field.field.required %}*{% endif %}</label>
                                         <input class="w-full ml-5 px-5 py-1 text-gray-700 bg-gray-200 rounded" value="{{field.value}}" id="{{ field.id_for_label }}" name="{{ field.name }}" type="{{ field.field.widget.input_type }}"  >
                                         <div class="bg-red-400">{{ field.errors }}</div>
                                     </div>
                                 {% else %}
                                     <div class="my-1" id='cordinator'>
-                                        <label class="block text-sm " for="{{ field.name }}">{{ field.label_tag }}</label>
+                                        <label class="block text-sm " for="{{ field.name }}">{{ field.label_tag }}{% if field.field.required %}*{% endif %}</label>
                                         <input class="w-full ml-5 px-5 py-1 text-gray-700 bg-gray-200 rounded" value="{{field.value}}" id="{{ field.id_for_label }}" name="{{ field.name }}" type="{{ field.field.widget.input_type }}"  >
                                         <div class="bg-red-400">{{ field.errors }}</div>
                                     </div>
                                 {% endif %}
                             {% else %}
                                 <div class="my-1">
-                                    <label class="block text-sm " for="{{ field.name }}">{{ field.label_tag }}</label>
+                                    <label class="block text-sm " for="{{ field.name }}">{{ field.label_tag }}{% if field.field.required %}*{% endif %}</label>
                                     <input class="w-full px-5 py-1 text-gray-700 bg-gray-200 rounded" value="{{field.value}}" maxlength="{{ field.field.max_length }}" id="{{ field.id_for_label }}" name="{{ field.name }}" type="{{ field.field.widget.input_type }}" required  >
                                     <div class="bg-red-400">{{ field.errors }}</div>
                                     <div class="bg-yellow-200 border-l-4 mt-2 border-yellow-500 pl-5 text-xs ">{{ field.help_text }}</div>
