@@ -1,5 +1,5 @@
 from django.shortcuts import  render,redirect,reverse
-from users.models import profile
+from users.models import Users
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.db.models import Q
 from django.http import JsonResponse
@@ -9,7 +9,7 @@ import django.dispatch
 
 @login_required
 def Year_Attendance(request,staff,profileid):
-    obj = profile.objects.get(id = int(profileid))
+    obj = Users.objects.get(id = int(profileid))
     content = {
         'profile_att': obj.attendance.Absent,
         'profile' : obj,
@@ -40,8 +40,8 @@ def updateAttendanceStudent(request):
         try:
             for i in results:
                 if str(i.Roll_no) in data.keys():
-                    i.profile_user.attendance.Absent[month][date][0] = data[f'{i.Roll_no}']
-                    att.append(i.profile_user.attendance)
+                    i.user.attendance.Absent[month][date][0] = data[f'{i.Roll_no}']
+                    att.append(i.user.attendance)
             attendance.objects.bulk_update(att,['Absent'])
             return JsonResponse({'is_taken':'True'})
         except:
@@ -62,8 +62,8 @@ def updateAttendanceTeacher(request):
         try:
             for i in results:
                 if str(i.Faculty_ID) in data.keys():
-                    i.profile_user.attendance.Absent[month][date][0] = data[f'{i.Faculty_ID}']
-                    att.append(i.profile_user.attendance)
+                    i.user.attendance.Absent[month][date][0] = data[f'{i.Faculty_ID}']
+                    att.append(i.user.attendance)
             attendance.objects.bulk_update(att,['Absent'])
             return JsonResponse({'is_taken':'True'})
         except:
@@ -83,8 +83,8 @@ def updateAttendanceStaff(request):
         try:
             for i in results:
                 if str(i.Staff_ID) in data.keys():
-                    i.profile_user.attendance.Absent[month][date][0] = data[f'{i.Staff_ID}']
-                    att.append(i.profile_user.attendance)
+                    i.user.attendance.Absent[month][date][0] = data[f'{i.Staff_ID}']
+                    att.append(i.user.attendance)
             attendance.objects.bulk_update(att,['Absent'])
             return JsonResponse({'is_taken':'True'})
         except:

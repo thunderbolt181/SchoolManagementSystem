@@ -24,7 +24,7 @@ It's a school management system which keeps track of students, teachers and staf
 4. Activate virtual environment by command `<environmane_name>\Script\activate` 
     > Command in step 4 is only for windows. Linux and macOS have different commands.
 
-    > Steps 3 and 4 are not compulsory by recommended. And virtual Environment can be of your choice.
+    > Steps 3 and 4 are not compulsory but recommended. And virtual Environment can be of your choice.
 5. Install required modules by running command `python -m pip install -r requirements.txt`.
 6. Install PostgreSQL and set up database
     >PostreSQL is must because some of the fields are not supported in sqlite3

@@ -3,7 +3,8 @@ from PIL import Image
 import os
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
-from users.models import profile
+from users.models import Users
+# from users.models import profile
 
 def path_and_rename(instance, filename):
     upload_to = f'{instance.id}/'
@@ -41,8 +42,9 @@ POST=(
 )
 
 class staff(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
-    profile_user = models.OneToOneField(profile,on_delete=models.CASCADE,null=True)
+    # user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
+    user = models.OneToOneField(Users,on_delete=models.CASCADE,null=True)
+    # profile_user = models.OneToOneField(profile,on_delete=models.CASCADE,null=True)
     institute = models.ForeignKey(institutes,on_delete=models.CASCADE,null=True)
     Staff_ID = models.IntegerField(blank=False)
     Post = models.CharField(choices=POST,blank=False,max_length=20)

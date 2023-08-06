@@ -91,6 +91,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'SchoolManagementSystem.wsgi.application'
 
+AUTH_USER_MODEL = 'users.Users'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases

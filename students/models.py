@@ -2,7 +2,8 @@ import os
 from django.db import models
 from django.contrib.auth.models import User
 from schools.models import institutes
-from users.models import profile
+from users.models import Users
+# from users.models import profile
 
 CLASS = (
     ("1","1"),
@@ -20,8 +21,8 @@ CLASS = (
 )
 
 class student(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
-    profile_user = models.OneToOneField(profile,on_delete=models.CASCADE,null=True)
+    user = models.OneToOneField(Users,on_delete=models.CASCADE,null=True)
+    # profile_user = models.OneToOneField(profile,on_delete=models.CASCADE,null=True)
     Admission_no = models.IntegerField(blank=False)
     Class = models.CharField(max_length=2,choices=CLASS,blank=False)
     Section = models.CharField(max_length=2,blank=False)

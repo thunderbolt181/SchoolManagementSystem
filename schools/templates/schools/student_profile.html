@@ -13,7 +13,7 @@
         <div class="lg:grid lg:grid-cols-3 flex-col lg:gap-4 lg:p-4">
             <div class="col-span-1 p-8 bg-white rounded-lg shadow-2xl justify-center">
                 <div class="m-auto p-2 rounded-lg lg:w-auto w-64 h-auto">
-                    <img src="{{profile.profile_user.Profile_pic.url}}" alt="Profile_pic" class="rounded-lg" style="max-height: 250px;margin: auto;">
+                    <img src="{{profile.user.Profile_pic.url}}" alt="Profile_pic" class="rounded-lg" style="max-height: 250px;margin: auto;">
                 </div>
                 <div class="justify-center text-center">
                     <span class="m-auto text-gray-800 text-3xl">{{profile.user.first_name}} {{profile.user.last_name}}</span>
@@ -40,7 +40,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.profile_user.DOB}}
+                                {{profile.user.DOB}}
                             </p>
                         </td>
                     </tr>
@@ -50,7 +50,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.profile_user.Gender}}
+                                {{profile.user.Gender}}
                             </p>
                         </td>
                     </tr>
@@ -90,7 +90,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.profile_user.phone_1}}
+                                {{profile.user.phone_1}}
                             </p>
                         </td>
                     </tr>
@@ -100,7 +100,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.profile_user.phone_2}}
+                                {{profile.user.phone_2}}
                             </p>
                         </td>
                     </tr>
@@ -110,7 +110,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.profile_user.Aadhar_Number}}
+                                {{profile.user.Aadhar_Number}}
                             </p>
                         </td>
                     </tr>
@@ -120,7 +120,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.profile_user.Category}}
+                                {{profile.user.Category}}
                             </p>
                         </td>
                     </tr>
@@ -130,7 +130,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.profile_user.Fathers_Name}}
+                                {{profile.user.Fathers_Name}}
                             </p>
                         </td>
                     </tr>
@@ -140,7 +140,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.profile_user.Fathers_Occupation}}
+                                {{profile.user.Fathers_Occupation}}
                             </p>
                         </td>
                     </tr>
@@ -150,7 +150,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.profile_user.Mothers_Name}}
+                                {{profile.user.Mothers_Name}}
                             </p>
                         </td>
                     </tr>
@@ -160,7 +160,7 @@
                         </td>
                         <td class="px-5 py-2 border-b border-gray-200 bg-white">
                             <p class="text-gray-700 whitespace-no-wrap">
-                                {{profile.profile_user.Mothers_Occupation}}
+                                {{profile.user.Mothers_Occupation}}
                             </p>
                         </td>
                     </tr>
@@ -209,7 +209,7 @@
                             <p class="text-black font-bold whitespace-no-wrap ">Attendance</p>
                         </td>
                         <td class="px-5 py-4 border-b border-gray-200 bg-white">
-                            <a href="{% url 'yearly-attendance' 'student' profile.profile_user.id %}">
+                            <a href="{% url 'yearly-attendance' 'student' profile.user.id %}">
                                 <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
                                     <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
                                     <span class="relative text-blue-700 flex justify-start items-center">View <i class="ml-2 fas fa-angle-double-right mr-3"></i></span>

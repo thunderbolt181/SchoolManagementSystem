@@ -8,8 +8,8 @@ from students.models import student
 from teachers.models import teachers
 from students.forms import StudentCreateForm
 from .forms import StaffCreateForm
-from users.models import profile
-from users.forms import ProfileCreateForm, UserRegistraionForm, UserEditForm
+# from users.models import profile
+from users.forms import UserRegistraionForm, UserEditForm
 from .models import institutes,staff
 from teachers.forms import TeacherCreateForm
 from attendance.models import attendance
@@ -18,7 +18,7 @@ import json
 from django.db import connection
 
 def staff_test(user):
-    if user.profile.status=='staff':
+    if user.status=='staff':
         return True
 
 def dbms_cursor(query):
@@ -45,7 +45,7 @@ def home(request):
 
 @login_required
 @user_passes_test(staff_test)
-def ProfileView(request,staff,id):
+def UsersView(request,staff,id):
     if staff == 'student':
         context = {
             'profile' : request.user.staff.institute.student_set.get(id = int(id)),
@@ -137,28 +137,22 @@ def search(request,status):
 @user_passes_test(staff_test)
 def CreateStudent(request):
     if request.method=='POST':
-        user_form = UserRegistraionForm(request.POST)
-        profile_form = ProfileCreateForm(request.POST,request.FILES)
+        user_form = UserRegistraionForm(request.POST,request.FILES)
         student_form = StudentCreateForm(request.POST)
-        if user_form.is_valid() and profile_form.is_valid() and student_form.is_valid():
-            U = user_form.save()
-            P = profile_form.save(commit=False)
+        if user_form.is_valid() and student_form.is_valid():
+            U = user_form.save(commit=False)
             S = student_form.save(commit=False)
-            P.status = "student"
-            P.user = U
+            U.status = "student"
             S.institute = request.user.staff.institute
-            P.save()
             S.user= U
-            S.profile_user = P
+            U.save()
             S.save()
             return redirect('dashboard','student')
     else:
         user_form = UserRegistraionForm()
-        profile_form = ProfileCreateForm()
         student_form = StudentCreateForm()
     context={
         'user_form' : user_form,
-        'profile_form' : profile_form,
         'staff_form' : student_form,
     }
     return render(request,'schools/student_new_entry.html',context)
@@ -167,28 +161,22 @@ def CreateStudent(request):
 @user_passes_test(staff_test)
 def Createstaff(request):
     if request.method=='POST':
-        user_form = UserRegistraionForm(request.POST)
-        profile_form = ProfileCreateForm(request.POST,request.FILES)
+        user_form = UserRegistraionForm(request.POST,request.FILES)
         staff_form = StaffCreateForm(request.POST)
-        if user_form.is_valid() and profile_form.is_valid() and staff_form.is_valid():
-            U = user_form.save()
-            P = profile_form.save(commit=False)
+        if user_form.is_valid() and staff_form.is_valid():
+            U = user_form.save(commit=False)
             S = staff_form.save(commit=False)
-            P.user=U
-            P.status = "staff"
-            P.save()
+            U.status = "staff"
             S.institute = request.user.staff.institute
             S.user=U
-            S.profile_user = P
+            U.save()
             S.save()
             return redirect('dashboard','staff')
     else:
         user_form = UserRegistraionForm()
-        profile_form = ProfileCreateForm()
         staff_form = StaffCreateForm()
     context={
         'user_form' : user_form,
-        'profile_form' : profile_form,
         'staff_form' : staff_form,
     }
     return render(request,'schools/staff_new_entry.html',context)
@@ -197,28 +185,22 @@ def Createstaff(request):
 @user_passes_test(staff_test)
 def Createteacher(request):
     if request.method=='POST':
-        user_form = UserRegistraionForm(request.POST)
-        profile_form = ProfileCreateForm(request.POST,request.FILES)
+        user_form = UserRegistraionForm(request.POST,request.FILES)
         teacher_form = TeacherCreateForm(request.POST)
-        if user_form.is_valid() and profile_form.is_valid() and teacher_form.is_valid():
-            U = user_form.save()
-            P = profile_form.save(commit=False)
+        if user_form.is_valid() and teacher_form.is_valid():
+            U = user_form.save(commit=False)
             T = teacher_form.save(commit=False)
-            P.user=U
-            P.status = "teacher"
-            P.save()
+            U.status = "teacher"
             T.user=U
             T.institute = request.user.staff.institute
-            T.profile_user = P
+            U.save()
             T.save()
             return redirect('dashboard','teacher')
     else:
         user_form = UserRegistraionForm()
-        profile_form = ProfileCreateForm()
         teacher_form = TeacherCreateForm()
     context={
         'user_form' : user_form,
-        'profile_form' : profile_form,
         'staff_form' : teacher_form,
     }
     return render(request,'schools/teacher_new_entry.html',context)
@@ -227,7 +209,7 @@ def Createteacher(request):
 
 @login_required
 @user_passes_test(staff_test)
-def EditStudent(request,status,id):
+def EditDetails(request,status,id):
     if status == 'student':
         obj = student.objects.get(id=int(id))
     elif status == 'staff':
@@ -241,16 +223,13 @@ def EditStudent(request,status,id):
             status_form = StaffCreateForm(request.POST,instance=obj)
         else:
             status_form = TeacherCreateForm(request.POST,instance=obj)
-        user_form = UserEditForm(request.POST,instance=obj.user)
-        profile_form = ProfileCreateForm(request.POST,request.FILES,instance=obj.profile_user)
-        if user_form.is_valid() and profile_form.is_valid() and status_form.is_valid():
+        user_form = UserEditForm(request.POST,request.FILES,instance=obj.user)
+        if user_form.is_valid() and status_form.is_valid():
             user_form.save()
-            profile_form.save()
             status_form.save()
-            return redirect("profile",status,id)
+            return redirect("users",status,id)
     else:
         user_form = UserEditForm(instance=obj.user)
-        profile_form = ProfileCreateForm(instance=obj.profile_user)
         if status == 'student':
             status_form = StudentCreateForm(instance=obj)
         elif status == 'staff':
@@ -259,7 +238,6 @@ def EditStudent(request,status,id):
             status_form = TeacherCreateForm(instance=obj)
     context={
         'user_form' : user_form,
-        'profile_form' : profile_form,
         'staff_form' : status_form,
         'extend_tag': f"schools/{status}_base.html"
     }

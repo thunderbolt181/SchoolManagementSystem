@@ -3,7 +3,8 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 from schools.models import institutes
-from users.models import profile
+from users.models import Users
+# from users.models import profile
 
 POST = (
     ("","--------"),
@@ -12,8 +13,8 @@ POST = (
 )
 
 class teachers(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE,null=True)
-    profile_user = models.OneToOneField(profile,on_delete=models.CASCADE,null=True)
+    user = models.OneToOneField(Users,on_delete=models.CASCADE,null=True)
+    # profile_user = models.OneToOneField(profile,on_delete=models.CASCADE,null=True)
     Faculty_ID = models.IntegerField(blank=False)
     Post = models.CharField(choices=POST,blank=False,max_length=20)
     Experiance = models.CharField(blank=False,max_length=20,default = "New to this profession")

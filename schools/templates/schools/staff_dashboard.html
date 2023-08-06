@@ -16,20 +16,20 @@
         </form>
     </div> 
     <div class="w-full mt-2 ">
-        <div class="bg-white z-10 overflow-auto rounded-lg">
-            <table class="bg-gray-100 min-w-full leading-normal ">
+        <div class="bg-white z-10 overflow-auto shadow-2xl rounded-lg">
+            <table class="min-w-full leading-normal ">
                 <thead>
                     <tr class="text-gray-600 uppercase">
-                        <th class="px-5 py-3 border-b-2 border-gray-200 text-left font-semibold tracking-wider">
+                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider">
                             Staff
                         </th>
-                        <th class="px-5 py-3 border-b-2 border-gray-200 text-left font-semibold tracking-wider">
+                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider">
                             Staff ID
                         </th>
-                        <th class="px-5 py-3 border-b-2 border-gray-200 text-left font-semibold tracking-wider">
+                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider">
                             Post
                         </th>
-                        <th class="px-5 py-3 border-b-2 border-gray-200 text-left font-semibold tracking-wider">
+                        <th class="px-5 py-3 border-b-2 border-gray-200 bg-gray-100 text-left font-semibold text-gray-600 uppercase tracking-wider">
                             View Details
                         </th>
                     </tr>
@@ -40,7 +40,7 @@
                             <td class="px-5 py-2 border-b border-gray-200 bg-white ">
                                 <div class="flex items-center">
                                     <div class="flex-shrink-0 w-10 h-10">
-                                        <img class="w-full h-full rounded-full" src="{{profile.profile_user.Profile_pic.url}}" />
+                                        <img class="w-full h-full rounded-full" src="{{profile.user.Profile_pic.url}}" />
                                     </div>
                                     <div class="ml-3">
                                         <p class="text-gray-900 whitespace-no-wrap">
@@ -58,7 +58,7 @@
                                 </p>
                             </td>
                             <td class="px-5 py-2 border-b border-gray-200 bg-white ">
-                                <a href="{% url 'profile' 'staff' profile.id %}">
+                                <a href="{% url 'users' 'staff' profile.id %}">
                                     <span class="relative inline-block px-3 py-1 font-semibold leading-tight">
                                         <span aria-hidden class="absolute inset-0 bg-blue-200 opacity-50 rounded-full"></span>
                                         <span class="relative text-blue-700 flex justify-start items-center">View <i class="ml-2 fas fa-angle-double-right mr-3"></i></span>
