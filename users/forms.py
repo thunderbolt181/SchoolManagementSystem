@@ -23,4 +23,4 @@ class UserEditForm(forms.ModelForm):
 
     class Meta:
         model = Users
-        exclude = ['password','is_admin','is_active','is_superuser','is_staff','date_join','last_login',"status"]
+        exclude = ['groups','user_permissions','password','is_admin','is_active','is_superuser','is_staff','date_join','last_login',"status"]

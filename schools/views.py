@@ -29,7 +29,7 @@ def dbms_cursor(query):
 
 @login_required
 @user_passes_test(staff_test)
-def home(request):
+def homeStaff(request):
     id = request.user.staff.institute.id
     count = dbms_cursor(f'''SELECT COUNT(id) FROM students_student WHERE institute_id = {id}
                            UNION ALL 

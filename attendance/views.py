@@ -9,12 +9,19 @@ import django.dispatch
 
 @login_required
 def Year_Attendance(request,staff,profileid):
-    obj = Users.objects.get(id = int(profileid))
-    content = {
-        'profile_att': obj.attendance.Absent,
-        'profile' : obj,
-        'extend_tag': f"schools/{staff}_base.html"
-    }
+    if request.user.status == 'staff':
+        obj = Users.objects.get(id = int(profileid))
+        content = {
+            'profile_att': obj.attendance.Absent,
+            'profile' : obj,
+            'extend_tag': f"schools/{staff}_base.html"
+        }
+    elif request.user.status == 'student':
+        content = {
+            'profile_att': request.user.attendance.Absent,
+            'profile' : request.user,
+            'extend_tag': f"students/{staff}_base.html"
+        }
     return render(request,'attendance/view_attendance.html',content)
 
 @login_required

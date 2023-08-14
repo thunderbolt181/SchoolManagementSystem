@@ -6,6 +6,7 @@ from PIL import Image
 import os
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
+from django.contrib.auth.models import PermissionsMixin
 
 CATEGORY=(
     ("","------"),
@@ -64,7 +65,7 @@ class MyUsersManager(BaseUserManager):
 
         return user
 
-class Users(AbstractBaseUser):
+class Users(AbstractBaseUser,PermissionsMixin):
     """
     - Creating custom user model.
     - using email to log in instead of username but username is still there.

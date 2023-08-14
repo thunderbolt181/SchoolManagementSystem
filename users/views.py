@@ -10,12 +10,15 @@ def login(request):
         user = auth.authenticate(username=username, password=password)
         if user is not None:
             try:
-                if user.profile.status == 'staff':
+                if user.status == 'staff':
                     auth.login(request, user)
-                    return redirect('home')
+                    return redirect('home-staff')
+                elif user.status == 'student':
+                    auth.login(request,user)
+                    return redirect('home-student')
                 else:
                     messages.error(request, 'User has no permission to access this link')
-            except :
+            except Exception as e:
                 messages.error(request, "User Profile does not exits.")
         else:
             messages.error(request, 'Incorrect Username/Password')

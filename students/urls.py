@@ -1,7 +1,7 @@
-# from django.urls import path,include
-# from . import views
-# from django.conf.urls.static import static
-# from django.conf import settings
+from django.urls import path
+from . import views
 
-# urlpatterns = [
-# ]
+urlpatterns = [
+    path('',views.homeStudent,name="home-student"),
+    path('student-profile',views.StudentView,name='student-profile'),
+]

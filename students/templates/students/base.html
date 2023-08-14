@@ -57,7 +57,7 @@
                                                     </div>
                                                 </div>
                                             </li>
-                                            <li><a href="{% url 'users' request.user.status request.user.staff.id %}" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline"><i  class="fa fa-user-circle fa-fw mr-3" aria-hidden="true" ></i>My Profile</a></li>
+                                            <li><a href="{% url 'student-profile' %}" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline"><i  class="fa fa-user-circle fa-fw mr-3" aria-hidden="true" ></i>My Profile</a></li>
                                             <li><a href="#" class="px-4 py-2 block text-gray-900 hover:bg-gray-400 no-underline hover:no-underline"><i  class="fa fa-bell fa-fw mr-3" aria-hidden="true" ></i>Notifications</a></li>
                                             <li>
                                                 <hr class="border-t mx-2 border-gray-400">
@@ -89,23 +89,8 @@
                     <div class="w-full flex-grow sm:flex sm:items-center sm:w-auto hidden sm:block sm:mt-0 bg-gray-900 z-10 " id="nav-content">
                         <ul class="list-reset sm:flex flex-1 items-center px-4 md:px-0">
                             <li class="mr-6 my-2 md:my-0" >
-                                <a href="{% url 'home-staff' %}" id="dashboard-nav" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-orange-600 hover:bg-gray-800 px-2 border-b-2 border-gray-900 hover:border-orange-600">
+                                <a href="{% url 'home-student' %}" id="dashboard-nav" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-orange-600 hover:bg-gray-800 px-2 border-b-2 border-gray-900 hover:border-orange-600">
                                     <i  class="fas fa-tachometer-alt fa-fw mr-3" aria-hidden="true" ></i><span class="pb-1 md:pb-0 text-sm">Dashboard</span>
-                                </a>
-                            </li>
-                            <li class="mr-6 my-2 md:my-0">
-                                <a href="{% url 'dashboard' 'student' %}" id="student-nav" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-blue-500 hover:bg-gray-800 px-2 border-b-2 border-gray-900 hover:border-blue-500">
-                                    <i class="fas fa-child fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Students</span>
-                                </a>
-                            </li>
-                            <li class="mr-6 my-2 md:my-0">
-                                <a href="{% url 'dashboard' 'teacher' %}" id="teacher-nav" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-purple-500 hover:bg-gray-800 px-2 border-b-2 border-gray-900 hover:border-purple-500">
-                                    <i class="fa fa-chalkboard-teacher fa-fw mr-3"></i><span class="pb-1 md:pb-0 text-sm">Teachers</span>
-                                </a>
-                            </li>
-                            <li class="mr-6 my-2 md:my-0">
-                                <a href="{% url 'dashboard' 'staff' %}" id="staff-nav" class="block py-1 md:py-3 pl-1 align-middle text-gray-500 no-underline hover:text-green-500 hover:bg-gray-800 px-2 border-b-2 border-gray-900 hover:border-green-500">
-                                    <i class="fa fa-users fa-fw mr-3" aria-hidden="true"></i><span class="pb-1 md:pb-0 text-sm">Staff</span>
                                 </a>
                             </li>
                             <li class="mr-6 my-2 md:my-0">

@@ -108,10 +108,10 @@
                       {% endif %}
                       <td class="px-5 py-2 border-b border-gray-200 bg-white ">
                         <select class="block w-full bg-gray-200 border border-gray-200 text-gray-700 py-1 px-2 pr-4 rounded leading-tight focus:outline-none focus:bg-white focus:border-gray-500 Attendance">
+                            <option value="3">Leave Unchanged</option>
                             <option value="1">Present</option>
                             <option value="0">Absent</option>
                             <option value="2">On Leave</option>
-                            <option value="3">Leave Unchanged</option>
                         </select>                  
                       </td>
                   </tr>
@@ -212,7 +212,6 @@
 
     function submitvalue(){
         var attendance=build_attendance();
-        console.log(attendance);
         data = {
             csrfmiddlewaretoken: "{{ csrf_token }}",
             'attendance':JSON.stringify(attendance)
@@ -224,10 +223,17 @@
             dataType : "json",
             success: function (data) {
                 if (data['is_taken']=="True") {
-                    message.innerHTML=`<div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+                    if (`{{status|safe}}` == 'student'){
+                        message.innerHTML=`<div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
                                             <p class="font-bold">Success</p>
                                             <p>Attendane of class ${attendance['c']}-${attendance['s']}  for ${selected_date.value} was updated</p>
                                         </div>`
+                    } else{
+                        message.innerHTML=`<div class="bg-green-100 border-l-4 border-green-500 text-green-700 p-4" role="alert">
+                                            <p class="font-bold">Success</p>
+                                            <p>Attendane of following people was updated Successfully</p>
+                                        </div>`
+                    }
                 }
                 else{
                     message.innerHTML=`<div class="bg-green-100 border-l-4 border-orange-500 text-orange-700 p-4" role="alert">
